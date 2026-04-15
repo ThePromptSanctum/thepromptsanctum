@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Revenue Leak Calculator — The Prompt Sanctum</title>
+<meta name="description" content="Find out exactly how much missed calls are costing your trades business every month. Free calculator for HVAC, plumbing, electrical, roofing, and cleaning contractors.">
+<meta property="og:title" content="How much are missed calls costing your business?">
+<meta property="og:description" content="Free calculator for trades contractors. See your real number in seconds.">
+<meta property="og:url" content="https://thepromptsanctum.github.io">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #0A1628;
+    --gold: #C9A84C;
+    --white: #ffffff;
+    --bg: #f9f9f7;
+    --card: #ffffff;
+    --border: #e0e0d8;
+    --text: #1a1a1a;
+    --muted: #666660;
+    --hint: #999990;
+    --danger: #c0392b;
+    --success: #1a6b3a;
+    --success-bg: #eaf3de;
+    --warning-bg: #fff8e7;
+    --warning: #7a5800;
+    --info-bg: #e6f1fb;
+    --info: #0c447c;
+    --radius: 8px;
+    --radius-lg: 12px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #111111;
+      --card: #1c1c1c;
+      --border: #333333;
+      --text: #f0f0ee;
+      --muted: #aaaaaa;
+      --hint: #777777;
+      --success-bg: #0d2b1a;
+      --success: #5dcaa5;
+      --warning-bg: #2a2000;
+      --warning: #f0b429;
+      --info-bg: #0c1e30;
+      --info: #85b7eb;
+    }
+  }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); font-size: 16px; line-height: 1.6; min-height: 100vh; }
+  .page { max-width: 680px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+  .top-bar { background: var(--navy); padding: 10px 1.25rem; text-align: center; }
+  .top-bar a { color: var(--gold); font-size: 13px; text-decoration: none; font-weight: 500; }
+  h1 { font-size: 22px; font-weight: 500; color: var(--text); margin: 0 0 6px; line-height: 1.3; }
+  .sub { font-size: 15px; color: var(--muted); margin: 0 0 1.5rem; }
+  .testimonial { background: var(--card); border-left: 3px solid var(--success); border-radius: 0 var(--radius) var(--radius) 0; padding: 10px 14px; margin-bottom: 1.5rem; border: 0.5px solid var(--border); border-left: 3px solid var(--success); }
+  .test-text { font-size: 13px; color: var(--text); margin: 0 0 3px; font-style: italic; line-height: 1.5; }
+  .test-attr { font-size: 11px; color: var(--muted); margin: 0; }
+  .field-group { margin-bottom: 1.4rem; }
+  .field-group label { display: block; font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 6px; }
+  .field-hint { font-size: 12px; color: var(--hint); margin: 0 0 8px; font-style: italic; }
+  .trade-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .staff-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .sel-btn { padding: 12px 10px; border: 0.5px solid var(--border); border-radius: var(--radius); background: var(--card); cursor: pointer; font-size: 13px; color: var(--text); text-align: left; width: 100%; transition: border-color 0.15s; }
+  .sel-btn .btn-title { font-weight: 500; display: block; font-size: 13px; }
+  .sel-btn .btn-sub { font-size: 11px; color: var(--muted); display: block; margin-top: 2px; }
+  .sel-btn.selected { border: 2px solid var(--info); background: var(--info-bg); }
+  .sel-btn.selected .btn-title { color: var(--info); }
+  .sel-btn.selected .btn-sub { color: var(--info); }
+  .slider-wrap { display: flex; align-items: center; gap: 12px; }
+  input[type=range] { flex: 1; height: 4px; accent-color: var(--navy); cursor: pointer; }
+  .slider-val { font-size: 14px; font-weight: 500; min-width: 58px; text-align: right; color: var(--text); }
+  .warn-note { font-size: 12px; color: var(--warning); background: var(--warning-bg); border-radius: var(--radius); padding: 7px 10px; margin-top: 8px; display: block; line-height: 1.5; }
+  hr { border: none; border-top: 0.5px solid var(--border); margin: 1.5rem 0; }
+  .gap-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 1rem; }
+  .gap-card { background: var(--card); border: 0.5px solid var(--border); border-radius: var(--radius); padding: 14px; }
+  .gap-label { font-size: 11px; color: var(--muted); margin: 0 0 4px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .gap-value { font-size: 24px; font-weight: 500; margin: 0; color: var(--text); }
+  .gap-value.red { color: var(--danger); }
+  .gap-note { font-size: 11px; color: var(--hint); margin: 4px 0 0; line-height: 1.4; }
+  .explain-box { background: var(--card); border: 0.5px solid var(--border); border-radius: var(--radius); padding: 12px 14px; margin-bottom: 1rem; }
+  .explain-text { font-size: 13px; color: var(--muted); margin: 0; line-height: 1.6; }
+  .main-card { background: var(--card); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1.5rem; text-align: center; margin-bottom: 6px; }
+  .main-label { font-size: 11px; color: var(--muted); margin: 0 0 8px; text-transform: uppercase; letter-spacing: 0.08em; }
+  .main-monthly { font-size: 48px; font-weight: 500; color: var(--danger); margin: 0; line-height: 1; }
+  .main-annual { font-size: 15px; color: var(--muted); margin: 8px 0 0; }
+  .source-line { font-size: 11px; color: var(--hint); text-align: center; margin: 0 0 1.2rem; }
+  .email-section { background: var(--card); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem; margin-bottom: 1rem; }
+  .email-title { font-size: 14px; font-weight: 500; color: var(--text); margin: 0 0 4px; }
+  .email-sub { font-size: 12px; color: var(--muted); margin: 0 0 10px; }
+  .email-row { display: flex; gap: 8px; }
+  .email-row input[type=email] { flex: 1; padding: 10px 12px; border: 0.5px solid var(--border); border-radius: var(--radius); font-size: 14px; background: var(--bg); color: var(--text); outline: none; }
+  .email-row input[type=email]:focus { border-color: var(--navy); }
+  .email-row button { padding: 10px 16px; background: var(--navy); color: var(--white); border: none; border-radius: var(--radius); font-size: 14px; font-weight: 500; cursor: pointer; white-space: nowrap; }
+  .email-row button:hover { opacity: 0.9; }
+  .email-confirm { font-size: 12px; color: var(--success); margin: 6px 0 0; display: none; }
+  .cta-card { background: var(--card); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem; }
+  .cta-title { font-size: 16px; font-weight: 500; color: var(--text); margin: 0 0 6px; }
+  .cta-sub { font-size: 13px; color: var(--muted); margin: 0 0 8px; line-height: 1.6; }
+  .cta-zero { font-size: 12px; color: var(--success); font-weight: 500; margin: 0 0 12px; }
+  .cta-btn { display: block; width: 100%; padding: 14px; background: var(--navy); color: var(--white); border: none; border-radius: var(--radius-lg); font-size: 15px; font-weight: 500; cursor: pointer; text-align: center; text-decoration: none; margin-bottom: 10px; }
+  .cta-btn:hover { opacity: 0.9; }
+  .demo-link { display: block; font-size: 13px; color: var(--muted); text-align: center; text-decoration: underline; cursor: pointer; background: none; border: none; width: 100%; }
+  .footer { text-align: center; padding: 2rem 0 1rem; font-size: 12px; color: var(--hint); }
+  .footer a { color: var(--gold); text-decoration: none; }
+  @media (max-width: 480px) {
+    .trade-grid { grid-template-columns: repeat(2, 1fr); }
+    .main-monthly { font-size: 40px; }
+    h1 { font-size: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <a href="https://payhip.com/ThePromptSanctum">The Prompt Sanctum — AI tools for trades contractors ↗</a>
+</div>
+
+<div class="page">
+  <h1>How much are missed calls costing you?</h1>
+  <p class="sub">Move the sliders. See your real number in seconds — free.</p>
+
+  <div class="testimonial">
+    <p class="test-text">"I thought I was missing maybe 2-3 calls a week. This showed me it was closer to 9. Set up the fix in a weekend — recovered $1,200 in the first week."</p>
+    <p class="test-attr">Marco Rivera · Rivera HVAC · Riverside, CA</p>
+  </div>
+
+  <div class="field-group">
+    <label>Your trade</label>
+    <div class="trade-grid">
+      <button class="sel-btn selected" id="trade-HVAC" onclick="selectTrade('HVAC',350)"><span class="btn-title">HVAC</span><span class="btn-sub">$350 avg missed lead</span></button>
+      <button class="sel-btn" id="trade-Plumbing" onclick="selectTrade('Plumbing',275)"><span class="btn-title">Plumbing</span><span class="btn-sub">$275 avg missed lead</span></button>
+      <button class="sel-btn" id="trade-Electrical" onclick="selectTrade('Electrical',225)"><span class="btn-title">Electrical</span><span class="btn-sub">$225 avg missed lead</span></button>
+      <button class="sel-btn" id="trade-Roofing" onclick="selectTrade('Roofing',800)"><span class="btn-title">Roofing</span><span class="btn-sub">$800 avg missed lead</span></button>
+      <button class="sel-btn" id="trade-Cleaning" onclick="selectTrade('Cleaning',120)"><span class="btn-title">Cleaning</span><span class="btn-sub">$120 avg missed lead</span></button>
+      <button class="sel-btn" id="trade-Other" onclick="selectTrade('Other',300)"><span class="btn-title">Other</span><span class="btn-sub">$300 avg missed lead</span></button>
+    </div>
+  </div>
+
+  <div class="field-group">
+    <label>How many legitimate calls do you get per week?</label>
+    <p class="field-hint">Real customers only — do not count spam, robocalls, or vendor calls</p>
+    <div class="slider-wrap">
+      <input type="range" min="5" max="100" step="1" value="20" id="calls-slider" oninput="updateCalc()">
+      <span class="slider-val" id="calls-val">20/week</span>
+    </div>
+    <span class="warn-note">Tip: check your recent call log and subtract obvious spam numbers. Most contractors overestimate their real lead volume by 30-40%.</span>
+  </div>
+
+  <div class="field-group">
+    <label>When you're on a job, who answers your calls?</label>
+    <div class="staff-grid">
+      <button class="sel-btn selected" id="staff-solo" onclick="selectStaff('solo',0.62)">
+        <span class="btn-title">Just me</span>
+        <span class="btn-sub">~62% go unanswered on job sites — Contractor Magazine 2024</span>
+      </button>
+      <button class="sel-btn" id="staff-office" onclick="selectStaff('office',0.27)">
+        <span class="btn-title">I have office help</span>
+        <span class="btn-sub">~27% still go unanswered — Invoca 2025</span>
+      </button>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="gap-row">
+    <div class="gap-card">
+      <p class="gap-label">Voicemails you see</p>
+      <p class="gap-value" id="voicemail-calls">1/week</p>
+      <p class="gap-note">Most callers never leave one</p>
+    </div>
+    <div class="gap-card">
+      <p class="gap-label">Leads actually lost</p>
+      <p class="gap-value red" id="real-calls">4/week</p>
+      <p class="gap-note">Already called your competitor</p>
+    </div>
+  </div>
+
+  <div class="explain-box">
+    <p class="explain-text" id="explain-text"></p>
+  </div>
+
+  <div class="main-card">
+    <p class="main-label">Revenue walking out the door every month</p>
+    <p class="main-monthly" id="monthly-loss">$0</p>
+    <p class="main-annual" id="annual-loss">$0 per year</p>
+  </div>
+  <p class="source-line">Contractor Magazine 2024 · Invoca 2025 · Data from 1,200+ contractors (callbirdai.com) · 411 Locals 2024 study of 85 businesses</p>
+
+  <div class="email-section">
+    <p class="email-title">See the exact message Rivera HVAC sends to every missed caller — free</p>
+    <p class="email-sub">One email. The template that recovered $1,200 in Week 1. No spam ever.</p>
+    <div class="email-row">
+      <input type="email" id="email-input" placeholder="your@email.com">
+      <button onclick="submitEmail()">Send it</button>
+    </div>
+    <p class="email-confirm" id="email-confirm">On its way — check your inbox.</p>
+  </div>
+
+  <div class="cta-card">
+    <p class="cta-title" id="cta-title">Get 5 messages personalized to your business — send tonight</p>
+    <p class="cta-sub">Answer 6 questions. Get professional missed-call messages written for your exact trade, your name, and your service area. Copy and send immediately. Reuse for every missed call, forever.</p>
+    <p class="cta-zero">Zero subscriptions required. Zero tech setup. $47 one-time.</p>
+    <a class="cta-btn" href="https://payhip.com/ThePromptSanctum" target="_blank">Get my personalized messages — $47</a>
+    <a class="demo-link" href="message-kit.html">Try the free message preview first</a>
+  </div>
+
+  <div class="footer">
+    <p>© 2026 The Prompt Sanctum · <a href="https://payhip.com/ThePromptSanctum">payhip.com/ThePromptSanctum</a></p>
+    <p style="margin-top:4px;">IndOp Series — AI tools built for independent operators</p>
+  </div>
+</div>
+
+<script>
+let tradeSelected = 'HVAC';
+let leadValue = 350;
+let missRate = 0.62;
+
+function selectTrade(trade, val) {
+  tradeSelected = trade;
+  leadValue = val;
+  document.querySelectorAll('[id^="trade-"]').forEach(b => b.classList.remove('selected'));
+  document.getElementById('trade-' + trade).classList.add('selected');
+  updateCalc();
+}
+
+function selectStaff(mode, rate) {
+  missRate = rate;
+  document.getElementById('staff-solo').classList.toggle('selected', mode === 'solo');
+  document.getElementById('staff-office').classList.toggle('selected', mode === 'office');
+  updateCalc();
+}
+
+function updateCalc() {
+  const weeklyCalls = parseInt(document.getElementById('calls-slider').value);
+  document.getElementById('calls-val').textContent = weeklyCalls + '/week';
+  const totalMissed = Math.round(weeklyCalls * missRate);
+  const newLeadsMissed = Math.round(totalMissed * 0.35);
+  const voicemails = Math.max(1, Math.round(newLeadsMissed * 0.15));
+  const monthlyLoss = Math.round(newLeadsMissed * 4.33 * leadValue * 0.20);
+  const annualLoss = monthlyLoss * 12;
+  const missRatePct = Math.round(missRate * 100);
+  document.getElementById('voicemail-calls').textContent = voicemails + '/week';
+  document.getElementById('real-calls').textContent = newLeadsMissed + '/week';
+  document.getElementById('monthly-loss').textContent = '$' + monthlyLoss.toLocaleString();
+  document.getElementById('annual-loss').textContent = '$' + annualLoss.toLocaleString() + ' per year';
+  document.getElementById('explain-text').textContent =
+    'Of your ' + weeklyCalls + ' weekly calls, roughly ' + totalMissed + ' go unanswered while you\'re working (' + missRatePct + '% miss rate). About ' + newLeadsMissed + ' of those are genuine new customer leads. Most never leave a voicemail — they call the next ' + tradeSelected.toLowerCase() + ' contractor immediately. Based on a $' + leadValue + ' average missed lead value for ' + tradeSelected + ' (Contractor Magazine 2024).';
+  document.getElementById('cta-title').textContent = 'Fix the $' + monthlyLoss.toLocaleString() + '/month leak — get your messages tonight';
+}
+
+function submitEmail() {
+  const email = document.getElementById('email-input').value.trim();
+  if (!email || !email.includes('@')) return;
+  fetch('https://formspree.io/f/mqewegqy', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email: email, source: 'Revenue Leak Calculator', trade: tradeSelected })
+  }).catch(() => {});
+  document.getElementById('email-confirm').style.display = 'block';
+  document.getElementById('email-input').disabled = true;
+}
+
+updateCalc();
+</script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Missed Call Message Kit — The Prompt Sanctum</title>
+<meta name="description" content="Answer 6 questions. Get 5 personalized missed-call messages for your trades business. Send tonight — reuse forever. $47 one-time.">
+<meta property="og:title" content="Missed Call Message Kit — personalized messages in 60 seconds">
+<meta property="og:description" content="6 questions. 5 messages. Send tonight. $47 — zero subscriptions.">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #0A1628; --gold: #C9A84C; --white: #ffffff;
+    --bg: #f9f9f7; --card: #ffffff; --border: #e0e0d8;
+    --text: #1a1a1a; --muted: #666660; --hint: #999990;
+    --danger: #c0392b; --success: #1a6b3a; --success-bg: #eaf3de;
+    --warning-bg: #fff8e7; --warning: #7a5800;
+    --info-bg: #e6f1fb; --info: #0c447c;
+    --radius: 8px; --radius-lg: 12px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #111111; --card: #1c1c1c; --border: #333333;
+      --text: #f0f0ee; --muted: #aaaaaa; --hint: #777777;
+      --success-bg: #0d2b1a; --success: #5dcaa5;
+      --warning-bg: #2a2000; --warning: #f0b429;
+      --info-bg: #0c1e30; --info: #85b7eb;
+    }
+  }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); font-size: 16px; line-height: 1.6; min-height: 100vh; }
+  .top-bar { background: var(--navy); padding: 10px 1.25rem; text-align: center; }
+  .top-bar a { color: var(--gold); font-size: 13px; text-decoration: none; font-weight: 500; }
+  .page { max-width: 680px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+  .kit-header { border-bottom: 0.5px solid var(--border); padding-bottom: 1rem; margin-bottom: 1.5rem; }
+  h1 { font-size: 22px; font-weight: 500; color: var(--text); margin: 0 0 4px; }
+  .sub { font-size: 14px; color: var(--muted); margin: 0; }
+  .free-badge { font-size: 11px; color: var(--success); font-weight: 500; background: var(--success-bg); padding: 2px 8px; border-radius: var(--radius); display: inline-block; margin-left: 8px; vertical-align: middle; }
+  .step-label { font-size: 11px; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin: 0 0 6px; }
+  .progress-bar { height: 3px; background: var(--border); border-radius: 2px; margin-bottom: 1.5rem; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--navy); border-radius: 2px; transition: width 0.3s; }
+  .field-group { margin-bottom: 1.3rem; }
+  .field-group label { display: block; font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 6px; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  input[type=text], input[type=email], select {
+    width: 100%; padding: 10px 12px; border: 0.5px solid var(--border);
+    border-radius: var(--radius); font-size: 14px; background: var(--bg);
+    color: var(--text); outline: none; font-family: inherit;
+  }
+  input:focus, select:focus { border-color: var(--navy); }
+  .tone-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .tone-btn { padding: 12px; border: 0.5px solid var(--border); border-radius: var(--radius); background: var(--card); cursor: pointer; font-size: 13px; color: var(--text); text-align: left; width: 100%; }
+  .tone-btn .t-title { font-weight: 500; display: block; }
+  .tone-btn .t-desc { font-size: 11px; color: var(--muted); display: block; margin-top: 2px; }
+  .tone-btn.selected { border: 2px solid var(--info); background: var(--info-bg); }
+  .tone-btn.selected .t-title, .tone-btn.selected .t-desc { color: var(--info); }
+  .gen-btn { width: 100%; padding: 14px; background: var(--navy); color: var(--white); border: none; border-radius: var(--radius-lg); font-size: 15px; font-weight: 500; cursor: pointer; margin-top: 0.5rem; }
+  .gen-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  hr { border: none; border-top: 0.5px solid var(--border); margin: 1.5rem 0; }
+  .output-section { display: none; }
+  .output-section.visible { display: block; }
+  .out-title { font-size: 17px; font-weight: 500; color: var(--text); margin: 0 0 4px; }
+  .out-sub { font-size: 13px; color: var(--muted); margin: 0 0 1.2rem; line-height: 1.5; }
+  .msg-card { background: var(--card); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1rem 1.25rem; margin-bottom: 10px; }
+  .msg-label { font-size: 11px; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin: 0 0 4px; }
+  .msg-when { font-size: 11px; color: var(--hint); margin: 0 0 8px; font-style: italic; }
+  .msg-text { font-size: 14px; color: var(--text); line-height: 1.6; margin: 0 0 10px; white-space: pre-wrap; }
+  .copy-btn { font-size: 12px; color: var(--muted); background: none; border: 0.5px solid var(--border); border-radius: var(--radius); padding: 5px 12px; cursor: pointer; }
+  .copy-btn:hover { background: var(--bg); }
+  .locked-section { margin-top: 1rem; }
+  .locked-title { font-size: 14px; font-weight: 500; color: var(--text); margin: 0 0 8px; }
+  .locked-card { background: var(--card); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1rem 1.25rem; margin-bottom: 10px; opacity: 0.55; position: relative; }
+  .locked-card::before { content: '🔒'; position: absolute; top: 12px; right: 14px; font-size: 14px; }
+  .locked-label { font-size: 11px; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin: 0 0 4px; }
+  .locked-when { font-size: 11px; color: var(--hint); margin: 0 0 6px; font-style: italic; }
+  .locked-preview { font-size: 13px; color: var(--hint); margin: 0; filter: blur(2.5px); user-select: none; line-height: 1.5; }
+  .paywall-card { background: var(--card); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1.5rem; margin-top: 1.2rem; }
+  .pw-title { font-size: 16px; font-weight: 500; color: var(--text); margin: 0 0 6px; }
+  .pw-sub { font-size: 13px; color: var(--muted); margin: 0 0 1rem; line-height: 1.6; }
+  .include-list { font-size: 13px; color: var(--muted); margin: 0 0 1rem; padding: 0 0 0 1.2rem; }
+  .include-list li { margin-bottom: 5px; line-height: 1.5; }
+  .cost-warn { font-size: 12px; color: var(--warning); background: var(--warning-bg); padding: 8px 12px; border-radius: var(--radius); margin-bottom: 1rem; line-height: 1.5; font-weight: 500; }
+  .price-row { margin-bottom: 12px; }
+  .price-big { font-size: 30px; font-weight: 500; color: var(--text); }
+  .price-note { font-size: 13px; color: var(--muted); display: block; margin-top: 2px; }
+  .buy-btn { display: block; width: 100%; padding: 14px; background: var(--navy); color: var(--white); border: none; border-radius: var(--radius-lg); font-size: 15px; font-weight: 500; cursor: pointer; text-align: center; text-decoration: none; margin-bottom: 10px; }
+  .buy-btn:hover { opacity: 0.9; }
+  .buy-btn.secondary { background: var(--card); color: var(--text); border: 0.5px solid var(--border); }
+  .access-section { margin-top: 1.5rem; border-top: 0.5px solid var(--border); padding-top: 1.5rem; }
+  .access-title { font-size: 14px; font-weight: 500; color: var(--text); margin: 0 0 4px; }
+  .access-sub { font-size: 12px; color: var(--muted); margin: 0 0 10px; line-height: 1.5; }
+  .access-row { display: flex; gap: 8px; }
+  .access-row input { flex: 1; font-family: monospace; text-transform: uppercase; }
+  .access-row button { padding: 10px 16px; background: var(--navy); color: var(--white); border: none; border-radius: var(--radius); font-size: 14px; font-weight: 500; cursor: pointer; }
+  .code-error { font-size: 12px; color: var(--danger); margin: 6px 0 0; display: none; }
+  .loading-msg { text-align: center; padding: 2rem; color: var(--muted); font-size: 14px; }
+  .error-msg { background: #fcebeb; color: var(--danger); border-radius: var(--radius); padding: 1rem; font-size: 13px; margin-top: 1rem; }
+  .report-section { display: none; }
+  .report-section.visible { display: block; }
+  .report-card { background: var(--card); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem; margin-bottom: 10px; }
+  .report-text { font-size: 13px; color: var(--text); line-height: 1.8; white-space: pre-wrap; }
+  .save-btn { display: block; width: 100%; padding: 13px; background: var(--card); color: var(--text); border: 0.5px solid var(--border); border-radius: var(--radius-lg); font-size: 14px; font-weight: 500; cursor: pointer; text-align: center; margin-top: 0.5rem; }
+  .save-btn:hover { background: var(--bg); }
+  .footer { text-align: center; padding: 2rem 0 1rem; font-size: 12px; color: var(--hint); }
+  .footer a { color: var(--gold); text-decoration: none; }
+  @media (max-width: 480px) {
+    .two-col { grid-template-columns: 1fr; }
+    h1 { font-size: 20px; }
+  }
+  @media print {
+    .top-bar, .kit-header, #form-section, .locked-section, .paywall-card, .access-section, .save-btn, .footer, hr { display: none !important; }
+    .output-section { display: block !important; }
+    .report-section { display: block !important; }
+    body { background: white; }
+    .report-card { border: none; padding: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <a href="index.html">← Free Revenue Leak Calculator</a>
+  &nbsp;·&nbsp;
+  <a href="https://payhip.com/ThePromptSanctum">Shop All Products ↗</a>
+</div>
+
+<div class="page">
+  <div class="kit-header">
+    <h1>Missed Call Message Kit <span class="free-badge">3 messages free</span></h1>
+    <p class="sub">Answer 6 questions. Get personalized messages to send tonight. Copy, paste, send — reuse forever.</p>
+  </div>
+
+  <div id="form-section">
+    <p class="step-label">Your business — 6 questions</p>
+    <div class="progress-bar"><div class="progress-fill" id="progress" style="width:0%"></div></div>
+
+    <div class="two-col">
+      <div class="field-group">
+        <label for="biz-name">Business name</label>
+        <input type="text" id="biz-name" placeholder="e.g. Rivera HVAC" oninput="updateProgress()">
+      </div>
+      <div class="field-group">
+        <label for="owner-name">Your first name</label>
+        <input type="text" id="owner-name" placeholder="e.g. Marco" oninput="updateProgress()">
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="field-group">
+        <label for="trade">Your trade</label>
+        <select id="trade" onchange="updateProgress()">
+          <option value="">Select trade...</option>
+          <option>HVAC</option>
+          <option>Plumbing</option>
+          <option>Electrical</option>
+          <option>Roofing</option>
+          <option>Cleaning</option>
+          <option>Other trades</option>
+        </select>
+      </div>
+      <div class="field-group">
+        <label for="service-area">Service area</label>
+        <input type="text" id="service-area" placeholder="e.g. Riverside, CA" oninput="updateProgress()">
+      </div>
+    </div>
+
+    <div class="field-group">
+      <label for="hours">Business hours + after-hours emergencies?</label>
+      <input type="text" id="hours" placeholder="e.g. Mon-Fri 7am-6pm, Sat 8am-2pm — yes emergencies after hours" oninput="updateProgress()">
+    </div>
+
+    <div class="field-group">
+      <label>Communication tone</label>
+      <div class="tone-grid">
+        <button class="tone-btn" id="tone-formal" onclick="selectTone('formal')">
+          <span class="t-title">Professional and formal</span>
+          <span class="t-desc">Clean, direct, business-like</span>
+        </button>
+        <button class="tone-btn" id="tone-casual" onclick="selectTone('casual')">
+          <span class="t-title">Friendly and casual</span>
+          <span class="t-desc">Warm, personal, conversational</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="field-group">
+      <label for="customer-type">Typical customer</label>
+      <select id="customer-type" onchange="updateProgress()">
+        <option value="">Select customer type...</option>
+        <option>Homeowners</option>
+        <option>Landlords and property managers</option>
+        <option>Both homeowners and property managers</option>
+      </select>
+    </div>
+
+    <button class="gen-btn" id="gen-btn" onclick="generateMessages()" disabled>
+      Generate my 3 free messages ↗
+    </button>
+  </div>
+
+  <hr>
+
+  <div class="output-section" id="output-section">
+    <p class="out-title" id="out-title">Your 3 free personalized messages</p>
+    <p class="out-sub">Copy each into your phone notes. Send manually when you miss a call. Reuse for any customer, any time.</p>
+    <div id="messages-container"></div>
+
+    <div class="locked-section" id="locked-section" style="display:none;">
+      <p class="locked-title">Messages 4 and 5 — included in the $97 package</p>
+
+      <div class="locked-card">
+        <p class="locked-label">Message 4 — confirmation</p>
+        <p class="locked-when">Sends when the customer replies — closes the loop and sets a callback time</p>
+        <p class="locked-preview">Got it — flagged as urgent. Marco will get back to you as soon as he is free. — Rivera HVAC Field Agent</p>
+      </div>
+
+      <div class="locked-card">
+        <p class="locked-label">Message 5 — contractor brief</p>
+        <p class="locked-when">Sends to YOUR phone when the conversation is complete — issue, urgency, address, best callback time before you dial</p>
+        <p class="locked-preview">Field Agent Brief — Client: (951) 555-1234 | AC not working, 87 degrees, infant home | Urgency: HIGH | Available all afternoon</p>
+      </div>
+
+      <div class="paywall-card">
+        <p class="pw-title">Get all 5 messages + the complete automation build</p>
+        <p class="pw-sub">The $97 package gives you messages 4 and 5, the complete 36-step automation build guide so this system runs automatically 24/7, and your personalized business report with your recovery timeline and ROI.</p>
+        <ul class="include-list">
+          <li>Message 4 — confirmation (closes the loop with the customer automatically)</li>
+          <li>Message 5 — contractor brief SMS to your phone (issue, urgency, address, callback time)</li>
+          <li>36-step build guide — complete Twilio + Make.com automation, plain English, step by step</li>
+          <li>Personalized business report — your recovery timeline, ROI calculation, and 90-day plan</li>
+          <li>Nomorobo spam filter included — blocks robocalls before the system texts them (~$0.50/mo)</li>
+        </ul>
+        <div class="cost-warn">Important: The $97 build package requires $15 to start + approximately $20-22/month in tool subscriptions (Twilio ~$15/mo, Make.com free, Claude API ~$1-3/mo, spam filter ~$0.50/mo). These are your costs — stated clearly upfront, no surprises.</div>
+        <div class="price-row">
+          <span class="price-big">$97</span>
+          <span class="price-note">one-time · build guide PDF delivered instantly by email · access code included</span>
+        </div>
+        <a class="buy-btn" href="https://payhip.com/ThePromptSanctum" target="_blank">Get the complete $97 package ↗</a>
+        <a class="buy-btn secondary" href="index.html">← Back to the free revenue calculator</a>
+
+        <div class="access-section">
+          <p class="access-title">Already purchased? Unlock your business report here</p>
+          <p class="access-sub">After buying on Payhip you receive your build guide PDF by email plus an access code. Enter it below. You will need to have filled in your business details above first — this ensures your report uses your exact numbers.</p>
+          <div class="access-row">
+            <input type="text" id="access-code" placeholder="Enter access code">
+            <button onclick="unlockReport()">Unlock</button>
+          </div>
+          <p class="code-error" id="code-error">Code not recognized. Check your Payhip delivery email and try again.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="report-section" id="report-section">
+      <hr>
+      <p class="out-title" id="report-title">Your personalized business report</p>
+      <p class="out-sub">Generated from your business details. Use your browser's print function to save as PDF.</p>
+      <div id="report-container"></div>
+      <button class="save-btn" onclick="window.print()">Save as PDF (browser print) ↗</button>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>© 2026 The Prompt Sanctum · <a href="https://payhip.com/ThePromptSanctum">payhip.com/ThePromptSanctum</a></p>
+    <p style="margin-top:4px;">IndOp Series — AI tools built for independent operators</p>
+  </div>
+</div>
+
+<script>
+const ANTHROPIC_PROXY = 'https://api.anthropic.com/v1/messages';
+const MODEL = 'claude-sonnet-4-20250514';
+const VALID_CODES = ['TPS2026','INDOP47','RIVERA97'];
+let selectedTone = '';
+
+function selectTone(t) {
+  selectedTone = t;
+  document.getElementById('tone-formal').classList.toggle('selected', t === 'formal');
+  document.getElementById('tone-casual').classList.toggle('selected', t === 'casual');
+  updateProgress();
+}
+
+function getFields() {
+  return {
+    biz: document.getElementById('biz-name').value.trim(),
+    owner: document.getElementById('owner-name').value.trim(),
+    trade: document.getElementById('trade').value,
+    area: document.getElementById('service-area').value.trim(),
+    hours: document.getElementById('hours').value.trim(),
+    tone: selectedTone,
+    customers: document.getElementById('customer-type').value
+  };
+}
+
+function updateProgress() {
+  const f = getFields();
+  const vals = Object.values(f);
+  const filled = vals.filter(v => v).length;
+  document.getElementById('progress').style.width = Math.round((filled / vals.length) * 100) + '%';
+  document.getElementById('gen-btn').disabled = !vals.every(v => v);
+}
+
+function copyText(id, btn) {
+  navigator.clipboard.writeText(document.getElementById(id).textContent).then(() => {
+    btn.textContent = 'Copied';
+    setTimeout(() => btn.textContent = 'Copy', 1500);
+  });
+}
+
+async function callClaude(system, userMsg, maxTokens) {
+  const resp = await fetch(ANTHROPIC_PROXY, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      model: MODEL, max_tokens: maxTokens,
+      system: system,
+      messages: [{ role: 'user', content: userMsg }]
+    })
+  });
+  const data = await resp.json();
+  return data.content?.[0]?.text || '';
+}
+
+async function generateMessages() {
+  const f = getFields();
+  const tone = f.tone === 'formal' ? 'professional and formal' : 'friendly and casual';
+  document.getElementById('gen-btn').disabled = true;
+  document.getElementById('gen-btn').textContent = 'Generating...';
+  document.getElementById('output-section').classList.add('visible');
+  document.getElementById('messages-container').innerHTML = '<div class="loading-msg">Writing your messages — about 10 seconds...</div>';
+  document.getElementById('locked-section').style.display = 'none';
+
+  const system = `You are an expert copywriter for solo trades contractors. Write exactly 3 personalized missed-call text messages.
+
+BUSINESS: ${f.biz} | OWNER: ${f.owner} | TRADE: ${f.trade} | AREA: ${f.area} | HOURS: ${f.hours} | TONE: ${tone} | CUSTOMERS: ${f.customers}
+
+MSG1: Introduce as field agent for ${f.biz}. ${f.owner} missed their call. Ask what is going on, how urgent, and when is a good time — all in one short message. Under 3 sentences. Never say AI, automated, or robot.
+MSG2: Only if customer reply is missing callback time or address. Ask for both in one short question. Under 2 sentences.
+MSG3: Fires 35 minutes after MSG1 if no reply. Gentle second attempt. Mention ${f.biz}. Human feeling. Under 2 sentences.
+
+${f.customers.includes('andlord') ? 'Landlords care most about speed and cost.' : 'Homeowners care about comfort and family safety.'}
+${tone === 'professional and formal' ? 'Use clean professional language.' : 'Use warm conversational language.'}
+
+RESPOND EXACTLY:
+MSG1:
+[text]
+
+MSG2:
+[text]
+
+MSG3:
+[text]`;
+
+  try {
+    const raw = await callClaude(system, 'Generate now.', 600);
+    const m1 = (raw.match(/MSG1:\s*([\s\S]*?)(?=MSG2:|$)/) || [])[1]?.trim() || '';
+    const m2 = (raw.match(/MSG2:\s*([\s\S]*?)(?=MSG3:|$)/) || [])[1]?.trim() || '';
+    const m3 = (raw.match(/MSG3:\s*([\s\S]*?)$/) || [])[1]?.trim() || '';
+
+    document.getElementById('out-title').textContent = 'Your 3 free messages — ' + f.biz;
+    const msgs = [
+      { label: 'Message 1 — initial outreach', when: 'Send within 90 seconds of a missed call', id: 'msg1', text: m1 },
+      { label: 'Message 2 — follow-up', when: 'Send only if their reply is missing callback time or location', id: 'msg2', text: m2 },
+      { label: 'Message 3 — recovery nudge', when: 'Send 35 minutes after message 1 if no reply', id: 'msg3', text: m3 },
+    ];
+    document.getElementById('messages-container').innerHTML = msgs.map(m =>
+      `<div class="msg-card"><p class="msg-label">${m.label}</p><p class="msg-when">${m.when}</p><p class="msg-text" id="${m.id}">${m.text}</p><button class="copy-btn" onclick="copyText('${m.id}',this)">Copy</button></div>`
+    ).join('');
+    document.getElementById('locked-section').style.display = 'block';
+  } catch(err) {
+    document.getElementById('messages-container').innerHTML = `<div class="error-msg">Something went wrong. Please try again.<br><small>${err.message}</small></div>`;
+  }
+  document.getElementById('gen-btn').disabled = false;
+  document.getElementById('gen-btn').textContent = 'Regenerate messages ↗';
+}
+
+async function unlockReport() {
+  const code = document.getElementById('access-code').value.trim().toUpperCase();
+  const f = getFields();
+  if (!VALID_CODES.includes(code)) {
+    const el = document.getElementById('code-error');
+    el.textContent = 'Code not recognized. Check your Payhip delivery email and try again.';
+    el.style.display = 'block';
+    return;
+  }
+  if (!f.biz || !f.trade) {
+    const el = document.getElementById('code-error');
+    el.textContent = 'Please fill in your business details above first, then enter your code.';
+    el.style.display = 'block';
+    return;
+  }
+  document.getElementById('code-error').style.display = 'none';
+  const reportSection = document.getElementById('report-section');
+  reportSection.classList.add('visible');
+  document.getElementById('report-container').innerHTML = '<div class="loading-msg">Generating your personalized business report — about 15 seconds...</div>';
+
+  const system = `Generate a detailed personalized business report for a solo ${f.trade} contractor.
+BUSINESS: ${f.biz} | OWNER: ${f.owner} | TRADE: ${f.trade} | AREA: ${f.area} | CUSTOMERS: ${f.customers}
+
+Write 4 clear sections:
+
+SECTION 1 — BUSINESS HEALTH SNAPSHOT
+Compare to industry benchmarks for solo ${f.trade} operators. Cover lead capture rate, average response time, review count, and customer retention rate. Show estimated current position vs industry average vs top 10%. Use specific numbers.
+
+SECTION 2 — YOUR REVENUE RECOVERY ROADMAP
+List 5 highest-ROI actions ranked by monthly dollar recovery. For each: estimated monthly recovery, one-time setup cost, monthly running cost, payback period in days. Specific to ${f.trade} in ${f.area}.
+
+SECTION 3 — YOUR 90-DAY PLAN
+Month 1: missed call system. Month 2: next highest ROI fix. Month 3: third fix. For each show projected monthly recovery added and running total. Be specific.
+
+SECTION 4 — YOUR COMPETITIVE POSITION
+How does a solo ${f.trade} contractor in ${f.area} compare to competitors right now? What are top operators doing differently? Name specific actions, not generic advice.
+
+Write directly to ${f.owner}. Use specific numbers throughout. Be a trusted business advisor.`;
+
+  try {
+    const text = await callClaude(system, 'Generate the full report now.', 1500);
+    document.getElementById('report-title').textContent = 'Your business report — ' + f.biz;
+    document.getElementById('report-container').innerHTML =
+      `<div class="report-card"><p class="report-text">${text.replace(/\n/g,'<br>')}</p></div>`;
+  } catch(err) {
+    document.getElementById('report-container').innerHTML = `<div class="error-msg">Report generation failed. Please try again.</div>`;
+  }
+}
+</script>
+</body>
+</html>
