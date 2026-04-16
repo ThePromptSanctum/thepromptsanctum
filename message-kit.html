@@ -111,12 +111,12 @@
 </head>
 <body>
 <div class="top-bar">
-  <a href="/">← Free Revenue Leak Calculator</a>
-  <a href="https://payhip.com/ThePromptSanctum">Shop All Products ↗</a>
+  <a href="/">&#8592; Free Revenue Leak Calculator</a>
+  <a href="https://payhip.com/ThePromptSanctum">Shop All Products &#8599;</a>
 </div>
 <div class="page">
   <div class="kit-header">
-    <h1>IndOp 1-A: The Missed Call Fix <span class="free-badge">3 messages free</span></h1>
+    <h1>IndOp 1-A: The Missed Call Fix <span class="free-badge">2 messages free</span></h1>
     <p class="sub">Answer 6 questions. Get personalized messages to send tonight. Copy, paste, send — reuse forever.</p>
   </div>
 
@@ -171,22 +171,28 @@
       <p class="field-hint">Describe in your own words — e.g. "homeowners dealing with AC emergencies", "landlords with rental properties", "small restaurants and shops"</p>
       <textarea id="customers" placeholder="e.g. mostly homeowners in the suburbs dealing with AC problems in summer, some landlords with rental units" oninput="updateProgress()"></textarea>
     </div>
-    <button class="gen-btn" id="gen-btn" onclick="generateMessages()" disabled>Generate my 3 free messages ↗</button>
+    <button class="gen-btn" id="gen-btn" onclick="generateMessages()" disabled>Generate my 2 free messages &#8599;</button>
   </div>
 
   <hr>
 
   <div class="output-section" id="output-section">
-    <p class="out-title" id="out-title">Your 3 free personalized messages</p>
+    <p class="out-title" id="out-title">Your 2 free personalized messages</p>
     <p class="out-sub">Copy each into your phone notes. Send manually when you miss a call. Reuse for any customer, any time.</p>
     <div id="messages-container"></div>
 
     <div class="auto-bridge" id="auto-bridge" style="display:none;">
-      <strong>Sending these manually?</strong> The $97 Build Package makes all 5 messages fire automatically within 90 seconds of every missed call — without you touching your phone. The system texts the customer, gathers their issue and callback time, then sends a brief to your phone before you call back.
+      <strong>Sending these manually?</strong> The $97 Build Package makes all 5 messages fire sequentially within 90 seconds of every missed call — without you touching your phone. The system texts the customer, gathers their issue and callback time, then sends a brief to your phone before you call back.
     </div>
 
     <div class="locked-section" id="locked-section" style="display:none;">
-      <p class="locked-title">Messages 4 and 5 — unlock with purchase</p>
+      <p class="locked-title">Messages 3, 4 and 5 — unlock with purchase</p>
+
+      <div class="locked-card">
+        <p class="locked-label">Message 3 — recovery nudge</p>
+        <p class="locked-when">Fires 35 minutes after Message 1 if the customer never replied — your second chance at the job</p>
+        <p class="locked-preview">Hey, just checking back in — still happy to help whenever you're ready. A quick reply gets you on the schedule. — [Business]</p>
+      </div>
 
       <div class="locked-card">
         <p class="locked-label">Message 4 — confirmation</p>
@@ -196,18 +202,19 @@
 
       <div class="locked-card compelling">
         <p class="locked-label">Message 5 — contractor brief (sent to YOUR phone)</p>
-        <p class="locked-when">This fires to YOUR phone the moment the conversation ends — so you know exactly what you're walking into before you dial</p>
+        <p class="locked-when">Fires to YOUR phone the moment the conversation ends — so you know exactly what you're walking into before you dial</p>
         <p class="locked-preview">FIELD AGENT BRIEF — [Business]
 Client: (951) 555-1234 | 1842 Magnolia Ave, Riverside
-Issue: AC not working — house at 87°, infant at home
+Issue: AC not working — house at 87 degrees, infant at home
 Urgency: HIGH | Best time: after 2pm today
 Est. job: $280-450 service call</p>
       </div>
 
       <div class="paywall-card">
         <p class="pw-title">Get all 5 messages — $47</p>
-        <p class="pw-sub">Messages 4 and 5 complete the sequence. Message 5 — the contractor brief — arrives on your phone before every callback so you know the issue, urgency, and address before you dial. Reuse forever, zero subscriptions.</p>
+        <p class="pw-sub">Messages 3, 4, and 5 complete the sequence. Message 3 catches the customers who went quiet. Message 5 — the contractor brief — arrives on your phone before every callback so you know the issue, urgency, and address before you dial. Reuse forever, zero subscriptions.</p>
         <ul class="include-list">
+          <li>Message 3 — recovery nudge that catches customers who didn't reply to Message 1</li>
           <li>Message 4 — confirmation that closes the loop with the customer</li>
           <li>Message 5 — contractor brief sent to YOUR phone (issue, urgency, address, callback time)</li>
           <li>All 5 messages personalized to your exact trade, name, and service area</li>
@@ -215,33 +222,34 @@ Est. job: $280-450 service call</p>
         </ul>
         <div class="price-row">
           <span class="price-big">$47</span>
-          <span class="price-note">one-time · zero subscriptions · license key delivered by email</span>
+          <span class="price-note">one-time &middot; zero subscriptions &middot; license key delivered by email</span>
         </div>
-        <a class="buy-btn" href="PAYHIP_47_URL" target="_blank" id="buy-47-btn">Get all 5 messages — $47 ↗</a>
+        <a class="buy-btn" href="PAYHIP_47_URL" target="_blank" id="buy-47-btn">Get all 5 messages — $47 &#8599;</a>
 
         <hr style="margin: 1.2rem 0;">
 
         <p class="pw-title">Want the system to run automatically? — $97</p>
-        <p class="pw-sub">The $97 Build Package includes everything in the $47 kit plus the complete 36-step automation build guide that makes all 5 messages fire automatically 24/7, plus your personalized business report.</p>
+        <p class="pw-sub">The $97 Build Package includes everything in the $47 kit plus the complete 36-step automation build guide that makes all 5 messages fire sequentially 24/7, plus your personalized business report.</p>
         <ul class="include-list">
           <li>Everything in the $47 kit</li>
           <li>36-step build guide — complete Twilio + Make.com automation, plain English</li>
+          <li>Claude Build Coach — paste into Claude.ai free, get a personal AI assistant for your build</li>
           <li>Nomorobo spam filter — blocks robocalls automatically (~$0.50/mo)</li>
           <li>Personalized business report — recovery timeline, ROI, and 90-day plan</li>
         </ul>
         <div class="cost-warn">Important: The $97 build package requires $15 to start + approximately $20-22/month in tool subscriptions (Twilio ~$15/mo, Make.com free, Claude API ~$1-3/mo, spam filter ~$0.50/mo). Stated upfront — no surprises.</div>
         <div class="price-row">
           <span class="price-big">$97</span>
-          <span class="price-note">one-time · build guide PDF + license key delivered by email instantly</span>
+          <span class="price-note">one-time &middot; build guide PDF + license key delivered by email instantly</span>
         </div>
-        <a class="buy-btn" href="PAYHIP_97_URL" target="_blank" id="buy-97-btn">Get the complete $97 build package ↗</a>
-        <a class="buy-btn secondary" href="/">← Back to the free revenue calculator</a>
+        <a class="buy-btn" href="PAYHIP_97_URL" target="_blank" id="buy-97-btn">Get the complete $97 build package &#8599;</a>
+        <a class="buy-btn secondary" href="/">&#8592; Back to the free revenue calculator</a>
 
         <div class="access-section">
           <p class="access-title">Already purchased? Enter your license key here</p>
           <p class="access-sub">After buying on Payhip your unique license key is delivered by email. Fill in your business details above first, then enter your key below. Each key is single-use and tied to your purchase.</p>
           <div class="access-row">
-            <input type="text" id="access-code" placeholder="Enter license key from your email">
+            <input type="text" id="access-code" placeholder="ENTER LICENSE KEY FROM YOUR EMAIL">
             <button onclick="unlockReport()">Unlock</button>
           </div>
           <p class="code-error" id="code-error">License key not recognized or already used. Check your Payhip purchase email.</p>
@@ -255,12 +263,12 @@ Est. job: $280-450 service call</p>
       <p class="out-title" id="report-title">Your personalized business report</p>
       <p class="out-sub">Generated from your business details. Use your browser's print function (Ctrl+P or Cmd+P) to save as PDF.</p>
       <div id="report-container"></div>
-      <button class="save-btn" onclick="window.print()">Save as PDF ↗</button>
+      <button class="save-btn" onclick="window.print()">Save as PDF &#8599;</button>
     </div>
   </div>
 
   <div class="footer">
-    <p>© 2026 The Prompt Sanctum · <a href="https://payhip.com/ThePromptSanctum">payhip.com/ThePromptSanctum</a></p>
+    <p>&#169; 2026 The Prompt Sanctum &middot; <a href="https://payhip.com/ThePromptSanctum">payhip.com/ThePromptSanctum</a></p>
     <p style="margin-top:4px;">IndOp Series — AI tools built for independent operators</p>
   </div>
 </div>
@@ -321,14 +329,13 @@ async function generateMessages() {
   document.getElementById('locked-section').style.display = 'none';
   document.getElementById('auto-bridge').style.display = 'none';
 
-  const system = `You are an expert copywriter for solo trades contractors. Write exactly 3 personalized missed-call text messages.
+  const system = `You are an expert copywriter for solo trades contractors. Write exactly 2 personalized missed-call text messages.
 
 BUSINESS: ${f.biz} | OWNER: ${f.owner} | TRADE: ${f.trade} | AREA: ${f.area} | HOURS: ${f.hours} | TONE: ${tone}
 CUSTOMERS: ${f.customers}
 
-MSG1: Introduce as field agent for ${f.biz}. ${f.owner} missed their call. Ask what is going on, how urgent, and when is a good time — all in one short message. Under 3 sentences. Never say AI, automated, or robot.
-MSG2: Only if customer reply is missing callback time or address. Ask for both in one short question. Under 2 sentences.
-MSG3: Fires 35 minutes after MSG1 if no reply. This is a gentle second-chance nudge. Keep it warm and brief. Mention ${f.biz}. Under 2 sentences. NOTE: This is the final free message — the confirmation and contractor brief are in the paid package.
+MSG1: Introduce as field agent for ${f.biz}. ${f.owner} missed their call. Ask what is going on and when is a good time — all in one short, natural message. Under 3 sentences. Never say AI, automated, or robot.
+MSG2: Only send if customer reply is missing a callback time. Ask ONE thing only: what day or time works best for a visit. One short sentence. Do not ask for address — that comes naturally in conversation.
 
 Tailor language and urgency specifically for: ${f.customers}
 Use ${tone} tone throughout. Never mention AI, automation, or software.
@@ -338,23 +345,18 @@ MSG1:
 [text]
 
 MSG2:
-[text]
-
-MSG3:
 [text]`;
 
   try {
-    const data = await callProxy({ system, messages: [{ role: 'user', content: 'Generate now.' }], max_tokens: 600 });
+    const data = await callProxy({ system, messages: [{ role: 'user', content: 'Generate now.' }], max_tokens: 400 });
     const raw = data.content?.[0]?.text || '';
     const m1 = (raw.match(/MSG1:\s*([\s\S]*?)(?=MSG2:|$)/) || [])[1]?.trim() || '';
-    const m2 = (raw.match(/MSG2:\s*([\s\S]*?)(?=MSG3:|$)/) || [])[1]?.trim() || '';
-    const m3 = (raw.match(/MSG3:\s*([\s\S]*?)$/) || [])[1]?.trim() || '';
+    const m2 = (raw.match(/MSG2:\s*([\s\S]*?)$/) || [])[1]?.trim() || '';
 
-    document.getElementById('out-title').textContent = 'Your 3 free messages — ' + f.biz;
+    document.getElementById('out-title').textContent = 'Your 2 free messages — ' + f.biz;
     const msgs = [
       { label: 'Message 1 — initial outreach', when: 'Send within 90 seconds of a missed call', id: 'msg1', text: m1 },
-      { label: 'Message 2 — follow-up', when: 'Send only if their reply is missing callback time or location', id: 'msg2', text: m2 },
-      { label: 'Message 3 — recovery nudge', when: 'Send 35 minutes after message 1 if no reply', id: 'msg3', text: m3 },
+      { label: 'Message 2 — follow-up', when: 'Send only if their reply is missing a callback time', id: 'msg2', text: m2 },
     ];
     document.getElementById('messages-container').innerHTML = msgs.map(m =>
       `<div class="msg-card"><p class="msg-label">${m.label}</p><p class="msg-when">${m.when}</p><p class="msg-text" id="${m.id}">${m.text}</p><button class="copy-btn" onclick="copyText('${m.id}',this)">Copy</button></div>`
@@ -367,7 +369,7 @@ MSG3:
     document.getElementById('messages-container').innerHTML = `<div class="error-msg">Something went wrong. Please try again.<br><small>${err.message}</small></div>`;
   }
   document.getElementById('gen-btn').disabled = false;
-  document.getElementById('gen-btn').textContent = 'Regenerate messages ↗';
+  document.getElementById('gen-btn').textContent = 'Regenerate messages &#8599;';
 }
 
 async function unlockReport() {
