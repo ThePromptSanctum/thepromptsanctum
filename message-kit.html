@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Missed Call Message Kit — The Prompt Sanctum</title>
+<title>IndOp 1-A: The Missed Call Fix — Message Kit</title>
 <meta name="description" content="Answer 6 questions. Get 5 personalized missed-call messages for your trades business. Send tonight — reuse forever. $47 one-time.">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -40,11 +40,7 @@
   .field-group label { display: block; font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 6px; }
   .field-hint { font-size: 12px; color: var(--hint); margin: 0 0 6px; font-style: italic; }
   .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  input[type=text], input[type=email], select, textarea {
-    width: 100%; padding: 10px 12px; border: 0.5px solid var(--border);
-    border-radius: var(--radius); font-size: 14px; background: var(--bg);
-    color: var(--text); outline: none; font-family: inherit;
-  }
+  input[type=text], input[type=email], select, textarea { width: 100%; padding: 10px 12px; border: 0.5px solid var(--border); border-radius: var(--radius); font-size: 14px; background: var(--bg); color: var(--text); outline: none; font-family: inherit; }
   textarea { resize: vertical; min-height: 72px; line-height: 1.5; }
   input:focus, select:focus, textarea:focus { border-color: var(--navy); }
   .tone-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
@@ -66,13 +62,16 @@
   .msg-text { font-size: 14px; color: var(--text); line-height: 1.6; margin: 0 0 10px; white-space: pre-wrap; }
   .copy-btn { font-size: 12px; color: var(--muted); background: none; border: 0.5px solid var(--border); border-radius: var(--radius); padding: 5px 12px; cursor: pointer; }
   .copy-btn:hover { background: var(--bg); }
+  .auto-bridge { background: var(--info-bg); border: 0.5px solid var(--info); border-radius: var(--radius); padding: 12px 14px; margin: 1rem 0; font-size: 13px; color: var(--info); line-height: 1.6; }
+  .auto-bridge strong { font-weight: 500; }
   .locked-section { margin-top: 1rem; }
   .locked-title { font-size: 14px; font-weight: 500; color: var(--text); margin: 0 0 8px; }
-  .locked-card { background: var(--card); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1rem 1.25rem; margin-bottom: 10px; opacity: 0.55; position: relative; }
+  .locked-card { background: var(--card); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1rem 1.25rem; margin-bottom: 10px; opacity: 0.6; position: relative; }
   .locked-card::before { content: '🔒'; position: absolute; top: 12px; right: 14px; font-size: 14px; }
   .locked-label { font-size: 11px; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin: 0 0 4px; }
   .locked-when { font-size: 11px; color: var(--hint); margin: 0 0 6px; font-style: italic; }
-  .locked-preview { font-size: 13px; color: var(--hint); margin: 0; filter: blur(2.5px); user-select: none; line-height: 1.5; }
+  .locked-preview { font-size: 13px; color: var(--hint); margin: 0; filter: blur(2px); user-select: none; line-height: 1.5; }
+  .locked-card.compelling .locked-preview { filter: blur(1.5px); font-size: 12px; font-family: monospace; }
   .paywall-card { background: var(--card); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1.5rem; margin-top: 1.2rem; }
   .pw-title { font-size: 16px; font-weight: 500; color: var(--text); margin: 0 0 6px; }
   .pw-sub { font-size: 13px; color: var(--muted); margin: 0 0 1rem; line-height: 1.6; }
@@ -92,6 +91,7 @@
   .access-row input { flex: 1; font-family: monospace; text-transform: uppercase; }
   .access-row button { padding: 10px 16px; background: var(--navy); color: var(--white); border: none; border-radius: var(--radius); font-size: 14px; font-weight: 500; cursor: pointer; }
   .code-error { font-size: 12px; color: var(--danger); margin: 6px 0 0; display: none; }
+  .code-success { font-size: 12px; color: var(--success); margin: 6px 0 0; display: none; }
   .loading-msg { text-align: center; padding: 2rem; color: var(--muted); font-size: 14px; }
   .error-msg { background: #fcebeb; color: var(--danger); border-radius: var(--radius); padding: 1rem; font-size: 13px; margin-top: 1rem; }
   .report-section { display: none; }
@@ -101,12 +101,9 @@
   .save-btn { display: block; width: 100%; padding: 13px; background: var(--card); color: var(--text); border: 0.5px solid var(--border); border-radius: var(--radius-lg); font-size: 14px; font-weight: 500; cursor: pointer; text-align: center; }
   .footer { text-align: center; padding: 2rem 0 1rem; font-size: 12px; color: var(--hint); }
   .footer a { color: var(--gold); text-decoration: none; }
-  @media (max-width: 480px) {
-    .two-col { grid-template-columns: 1fr; }
-    h1 { font-size: 20px; }
-  }
+  @media (max-width: 480px) { .two-col { grid-template-columns: 1fr; } h1 { font-size: 20px; } }
   @media print {
-    .top-bar, .kit-header, #form-section, .locked-section, .paywall-card, .access-section, .save-btn, .footer, hr { display: none !important; }
+    .top-bar, .kit-header, #form-section, .locked-section, .paywall-card, .access-section, .save-btn, .footer, hr, .auto-bridge { display: none !important; }
     .output-section, .report-section { display: block !important; }
     body { background: white; }
   }
@@ -119,14 +116,13 @@
 </div>
 <div class="page">
   <div class="kit-header">
-    <h1>Missed Call Message Kit <span class="free-badge">3 messages free</span></h1>
+    <h1>IndOp 1-A: The Missed Call Fix <span class="free-badge">3 messages free</span></h1>
     <p class="sub">Answer 6 questions. Get personalized messages to send tonight. Copy, paste, send — reuse forever.</p>
   </div>
 
   <div id="form-section">
     <p class="step-label">Your business — 6 questions</p>
     <div class="progress-bar"><div class="progress-fill" id="progress" style="width:0%"></div></div>
-
     <div class="two-col">
       <div class="field-group">
         <label for="biz-name">Business name</label>
@@ -137,23 +133,15 @@
         <input type="text" id="owner-name" placeholder="e.g. Marco" oninput="updateProgress()">
       </div>
     </div>
-
     <div class="two-col">
       <div class="field-group">
         <label for="trade">Your trade</label>
         <select id="trade" onchange="updateProgress()">
           <option value="">Select trade...</option>
-          <option>HVAC</option>
-          <option>Plumbing</option>
-          <option>Electrical</option>
-          <option>Roofing</option>
-          <option>Cleaning</option>
-          <option>Landscaping</option>
-          <option>Pest Control</option>
-          <option>Pool Service</option>
-          <option>Handyman</option>
-          <option>General Contractor</option>
-          <option>Other trades</option>
+          <option>HVAC</option><option>Plumbing</option><option>Electrical</option>
+          <option>Roofing</option><option>Cleaning</option><option>Landscaping</option>
+          <option>Pest Control</option><option>Pool Service</option><option>Handyman</option>
+          <option>General Contractor</option><option>Other trades</option>
         </select>
       </div>
       <div class="field-group">
@@ -161,12 +149,10 @@
         <input type="text" id="service-area" placeholder="e.g. Riverside, CA" oninput="updateProgress()">
       </div>
     </div>
-
     <div class="field-group">
       <label for="hours">Business hours + after-hours emergencies?</label>
       <input type="text" id="hours" placeholder="e.g. Mon-Fri 7am-6pm, Sat 8am-2pm — yes emergencies after hours" oninput="updateProgress()">
     </div>
-
     <div class="field-group">
       <label>Communication tone</label>
       <div class="tone-grid">
@@ -180,16 +166,12 @@
         </button>
       </div>
     </div>
-
     <div class="field-group">
       <label for="customers">Who are your typical customers?</label>
-      <p class="field-hint">Describe in your own words — e.g. "homeowners in the suburbs", "landlords with rental properties", "small restaurants and retail shops", "property management companies"</p>
-      <textarea id="customers" placeholder="e.g. mostly homeowners dealing with AC emergencies in summer, some landlords with rental properties" oninput="updateProgress()"></textarea>
+      <p class="field-hint">Describe in your own words — e.g. "homeowners dealing with AC emergencies", "landlords with rental properties", "small restaurants and shops"</p>
+      <textarea id="customers" placeholder="e.g. mostly homeowners in the suburbs dealing with AC problems in summer, some landlords with rental units" oninput="updateProgress()"></textarea>
     </div>
-
-    <button class="gen-btn" id="gen-btn" onclick="generateMessages()" disabled>
-      Generate my 3 free messages ↗
-    </button>
+    <button class="gen-btn" id="gen-btn" onclick="generateMessages()" disabled>Generate my 3 free messages ↗</button>
   </div>
 
   <hr>
@@ -199,45 +181,71 @@
     <p class="out-sub">Copy each into your phone notes. Send manually when you miss a call. Reuse for any customer, any time.</p>
     <div id="messages-container"></div>
 
+    <div class="auto-bridge" id="auto-bridge" style="display:none;">
+      <strong>Sending these manually?</strong> The $97 Build Package makes all 5 messages fire automatically within 90 seconds of every missed call — without you touching your phone. The system texts the customer, gathers their issue and callback time, then sends a brief to your phone before you call back.
+    </div>
+
     <div class="locked-section" id="locked-section" style="display:none;">
-      <p class="locked-title">Messages 4 and 5 — included in the $97 package</p>
+      <p class="locked-title">Messages 4 and 5 — unlock with purchase</p>
+
       <div class="locked-card">
         <p class="locked-label">Message 4 — confirmation</p>
-        <p class="locked-when">Sends when the customer replies — closes the loop and sets a callback time</p>
-        <p class="locked-preview">Got it — flagged as urgent. Marco will get back to you as soon as he is free. — Rivera HVAC Field Agent</p>
+        <p class="locked-when">Fires automatically when the customer replies — closes the loop and confirms callback time</p>
+        <p class="locked-preview">Got it — flagged as urgent. [Owner] will get back to you as soon as he is free. — [Business] Field Agent</p>
       </div>
-      <div class="locked-card">
-        <p class="locked-label">Message 5 — contractor brief</p>
-        <p class="locked-when">Sends to YOUR phone when the conversation ends — issue, urgency, address, best callback time</p>
-        <p class="locked-preview">Field Agent Brief — Client: (951) 555-1234 | AC not working, 87 degrees, infant home | Urgency: HIGH | Available all afternoon</p>
+
+      <div class="locked-card compelling">
+        <p class="locked-label">Message 5 — contractor brief (sent to YOUR phone)</p>
+        <p class="locked-when">This fires to YOUR phone the moment the conversation ends — so you know exactly what you're walking into before you dial</p>
+        <p class="locked-preview">FIELD AGENT BRIEF — [Business]
+Client: (951) 555-1234 | 1842 Magnolia Ave, Riverside
+Issue: AC not working — house at 87°, infant at home
+Urgency: HIGH | Best time: after 2pm today
+Est. job: $280-450 service call</p>
       </div>
 
       <div class="paywall-card">
-        <p class="pw-title">Get all 5 messages + the complete automation build</p>
-        <p class="pw-sub">The $97 package gives you messages 4 and 5, the complete 36-step automation build guide so this runs automatically 24/7, and your personalized business report with recovery timeline and ROI.</p>
+        <p class="pw-title">Get all 5 messages — $47</p>
+        <p class="pw-sub">Messages 4 and 5 complete the sequence. Message 5 — the contractor brief — arrives on your phone before every callback so you know the issue, urgency, and address before you dial. Reuse forever, zero subscriptions.</p>
         <ul class="include-list">
-          <li>Message 4 — confirmation (closes the loop with the customer automatically)</li>
-          <li>Message 5 — contractor brief SMS to your phone (issue, urgency, address, callback time)</li>
-          <li>36-step build guide — complete Twilio + Make.com automation, plain English, step by step</li>
-          <li>Personalized business report — your recovery timeline, ROI calculation, and 90-day plan</li>
+          <li>Message 4 — confirmation that closes the loop with the customer</li>
+          <li>Message 5 — contractor brief sent to YOUR phone (issue, urgency, address, callback time)</li>
+          <li>All 5 messages personalized to your exact trade, name, and service area</li>
+          <li>Reuse for every missed call, forever — zero subscriptions, zero tech setup</li>
+        </ul>
+        <div class="price-row">
+          <span class="price-big">$47</span>
+          <span class="price-note">one-time · zero subscriptions · license key delivered by email</span>
+        </div>
+        <a class="buy-btn" href="PAYHIP_47_URL" target="_blank" id="buy-47-btn">Get all 5 messages — $47 ↗</a>
+
+        <hr style="margin: 1.2rem 0;">
+
+        <p class="pw-title">Want the system to run automatically? — $97</p>
+        <p class="pw-sub">The $97 Build Package includes everything in the $47 kit plus the complete 36-step automation build guide that makes all 5 messages fire automatically 24/7, plus your personalized business report.</p>
+        <ul class="include-list">
+          <li>Everything in the $47 kit</li>
+          <li>36-step build guide — complete Twilio + Make.com automation, plain English</li>
           <li>Nomorobo spam filter — blocks robocalls automatically (~$0.50/mo)</li>
+          <li>Personalized business report — recovery timeline, ROI, and 90-day plan</li>
         </ul>
         <div class="cost-warn">Important: The $97 build package requires $15 to start + approximately $20-22/month in tool subscriptions (Twilio ~$15/mo, Make.com free, Claude API ~$1-3/mo, spam filter ~$0.50/mo). Stated upfront — no surprises.</div>
         <div class="price-row">
           <span class="price-big">$97</span>
-          <span class="price-note">one-time · build guide PDF delivered by email instantly · access code included</span>
+          <span class="price-note">one-time · build guide PDF + license key delivered by email instantly</span>
         </div>
-        <a class="buy-btn" href="https://payhip.com/ThePromptSanctum" target="_blank">Get the complete $97 package ↗</a>
+        <a class="buy-btn" href="PAYHIP_97_URL" target="_blank" id="buy-97-btn">Get the complete $97 build package ↗</a>
         <a class="buy-btn secondary" href="/">← Back to the free revenue calculator</a>
 
         <div class="access-section">
-          <p class="access-title">Already purchased? Unlock your business report here</p>
-          <p class="access-sub">After buying on Payhip you receive your build guide PDF by email plus an access code. Fill in your business details above first, then enter your code below — this ensures your report uses your exact information.</p>
+          <p class="access-title">Already purchased? Enter your license key here</p>
+          <p class="access-sub">After buying on Payhip your unique license key is delivered by email. Fill in your business details above first, then enter your key below. Each key is single-use and tied to your purchase.</p>
           <div class="access-row">
-            <input type="text" id="access-code" placeholder="Enter access code">
+            <input type="text" id="access-code" placeholder="Enter license key from your email">
             <button onclick="unlockReport()">Unlock</button>
           </div>
-          <p class="code-error" id="code-error">Code not recognized. Check your Payhip delivery email and try again.</p>
+          <p class="code-error" id="code-error">License key not recognized or already used. Check your Payhip purchase email.</p>
+          <p class="code-success" id="code-success">License key verified. Generating your business report...</p>
         </div>
       </div>
     </div>
@@ -258,7 +266,6 @@
 </div>
 
 <script>
-const VALID_CODES = ['TPS2026','INDOP47','RIVERA97'];
 let selectedTone = '';
 
 function selectTone(t) {
@@ -295,18 +302,13 @@ function copyText(id, btn) {
   });
 }
 
-async function callProxy(system, userMsg, maxTokens) {
+async function callProxy(payload) {
   const resp = await fetch('/.netlify/functions/claude', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      system: system,
-      messages: [{ role: 'user', content: userMsg }],
-      max_tokens: maxTokens
-    })
+    body: JSON.stringify(payload)
   });
-  const data = await resp.json();
-  return data.content?.[0]?.text || '';
+  return await resp.json();
 }
 
 async function generateMessages() {
@@ -317,31 +319,33 @@ async function generateMessages() {
   document.getElementById('output-section').classList.add('visible');
   document.getElementById('messages-container').innerHTML = '<div class="loading-msg">Writing your messages — about 10 seconds...</div>';
   document.getElementById('locked-section').style.display = 'none';
+  document.getElementById('auto-bridge').style.display = 'none';
 
   const system = `You are an expert copywriter for solo trades contractors. Write exactly 3 personalized missed-call text messages.
 
 BUSINESS: ${f.biz} | OWNER: ${f.owner} | TRADE: ${f.trade} | AREA: ${f.area} | HOURS: ${f.hours} | TONE: ${tone}
 CUSTOMERS: ${f.customers}
 
-MSG1: Introduce as field agent for ${f.biz}. ${f.owner} missed their call. Ask what is going on, how urgent, and when is a good time — all in one short message. Under 3 sentences. Never say AI, automated, or robot. Reference the trade naturally.
+MSG1: Introduce as field agent for ${f.biz}. ${f.owner} missed their call. Ask what is going on, how urgent, and when is a good time — all in one short message. Under 3 sentences. Never say AI, automated, or robot.
 MSG2: Only if customer reply is missing callback time or address. Ask for both in one short question. Under 2 sentences.
-MSG3: Fires 35 minutes after MSG1 if no reply. Gentle second attempt. Mention ${f.biz}. Human feeling. Under 2 sentences.
+MSG3: Fires 35 minutes after MSG1 if no reply. This is a gentle second-chance nudge. Keep it warm and brief. Mention ${f.biz}. Under 2 sentences. NOTE: This is the final free message — the confirmation and contractor brief are in the paid package.
 
-Tailor the language and urgency framing specifically for the customer type described: ${f.customers}
-Use ${tone} tone throughout.
+Tailor language and urgency specifically for: ${f.customers}
+Use ${tone} tone throughout. Never mention AI, automation, or software.
 
-RESPOND EXACTLY IN THIS FORMAT:
+RESPOND EXACTLY:
 MSG1:
-[message text]
+[text]
 
 MSG2:
-[message text]
+[text]
 
 MSG3:
-[message text]`;
+[text]`;
 
   try {
-    const raw = await callProxy(system, 'Generate now.', 600);
+    const data = await callProxy({ system, messages: [{ role: 'user', content: 'Generate now.' }], max_tokens: 600 });
+    const raw = data.content?.[0]?.text || '';
     const m1 = (raw.match(/MSG1:\s*([\s\S]*?)(?=MSG2:|$)/) || [])[1]?.trim() || '';
     const m2 = (raw.match(/MSG2:\s*([\s\S]*?)(?=MSG3:|$)/) || [])[1]?.trim() || '';
     const m3 = (raw.match(/MSG3:\s*([\s\S]*?)$/) || [])[1]?.trim() || '';
@@ -355,7 +359,10 @@ MSG3:
     document.getElementById('messages-container').innerHTML = msgs.map(m =>
       `<div class="msg-card"><p class="msg-label">${m.label}</p><p class="msg-when">${m.when}</p><p class="msg-text" id="${m.id}">${m.text}</p><button class="copy-btn" onclick="copyText('${m.id}',this)">Copy</button></div>`
     ).join('');
+
+    document.getElementById('auto-bridge').style.display = 'block';
     document.getElementById('locked-section').style.display = 'block';
+
   } catch(err) {
     document.getElementById('messages-container').innerHTML = `<div class="error-msg">Something went wrong. Please try again.<br><small>${err.message}</small></div>`;
   }
@@ -364,51 +371,80 @@ MSG3:
 }
 
 async function unlockReport() {
-  const code = document.getElementById('access-code').value.trim().toUpperCase();
+  const licenseKey = document.getElementById('access-code').value.trim().toUpperCase();
   const f = getFields();
-  if (!VALID_CODES.includes(code)) {
-    const el = document.getElementById('code-error');
-    el.textContent = 'Code not recognized. Check your Payhip delivery email and try again.';
-    el.style.display = 'block';
+
+  if (!licenseKey) {
+    showCodeError('Please enter your license key from your Payhip purchase email.');
     return;
   }
   if (!f.biz || !f.trade) {
-    const el = document.getElementById('code-error');
-    el.textContent = 'Please fill in your business details above first, then enter your code.';
-    el.style.display = 'block';
+    showCodeError('Please fill in your business details above first, then enter your license key.');
     return;
   }
-  document.getElementById('code-error').style.display = 'none';
-  document.getElementById('report-section').classList.add('visible');
-  document.getElementById('report-container').innerHTML = '<div class="loading-msg">Generating your personalized business report — about 15 seconds...</div>';
 
-  const system = `Generate a detailed personalized business report for a solo ${f.trade} contractor.
+  document.getElementById('code-error').style.display = 'none';
+  document.getElementById('code-success').style.display = 'none';
+
+  const unlockBtn = document.querySelector('.access-row button');
+  unlockBtn.textContent = 'Verifying...';
+  unlockBtn.disabled = true;
+
+  try {
+    const validationResult = await callProxy({
+      licenseKey: licenseKey,
+      productLink: 'PAYHIP_97_URL',
+      validateOnly: true
+    });
+
+    if (!validationResult.valid) {
+      showCodeError(validationResult.error || 'License key not recognized. Check your Payhip purchase email.');
+      unlockBtn.textContent = 'Unlock';
+      unlockBtn.disabled = false;
+      return;
+    }
+
+    document.getElementById('code-success').style.display = 'block';
+    document.getElementById('report-section').classList.add('visible');
+    document.getElementById('report-container').innerHTML = '<div class="loading-msg">Generating your personalized business report — about 15 seconds...</div>';
+
+    const system = `Generate a detailed personalized business report for a solo ${f.trade} contractor.
 BUSINESS: ${f.biz} | OWNER: ${f.owner} | TRADE: ${f.trade} | AREA: ${f.area} | CUSTOMERS: ${f.customers}
 
-Write 4 clear sections with specific numbers throughout:
+Write 4 clear sections with specific numbers:
 
 SECTION 1 — BUSINESS HEALTH SNAPSHOT
-Compare to industry benchmarks for solo ${f.trade} operators. Cover lead capture rate, response time, review count, customer retention. Show current estimated position vs industry average vs top 10%. Use real numbers.
+Compare to industry benchmarks for solo ${f.trade} operators. Cover lead capture rate, response time, review count, customer retention. Show estimated current vs industry average vs top 10%. Use real numbers.
 
 SECTION 2 — REVENUE RECOVERY ROADMAP
-List the 5 highest-ROI actions ranked by monthly dollar recovery. For each: estimated monthly recovery, setup cost, monthly running cost, payback period in days. Specific to ${f.trade} in ${f.area}.
+List 5 highest-ROI actions ranked by monthly dollar recovery. For each: estimated monthly recovery, setup cost, monthly running cost, payback period. Specific to ${f.trade} in ${f.area}.
 
 SECTION 3 — 90-DAY IMPLEMENTATION PLAN
-Month 1: missed call system. Month 2: next highest ROI fix. Month 3: third fix. For each show projected monthly recovery added and running total.
+Month 1: missed call system. Month 2: next highest ROI fix. Month 3: third fix. Show projected monthly recovery added and running total for each month.
 
 SECTION 4 — COMPETITIVE POSITION
-How does a solo ${f.trade} contractor in ${f.area} compare to local competitors? What are top performers doing differently? Specific actions not generic advice.
+How does a solo ${f.trade} contractor in ${f.area} compare to local competitors? What are top performers doing differently? Specific actions, not generic advice.
 
 Write directly to ${f.owner}. Be a trusted business advisor.`;
 
-  try {
-    const text = await callProxy(system, 'Generate the full report now.', 1500);
+    const reportData = await callProxy({ system, messages: [{ role: 'user', content: 'Generate the full report now.' }], max_tokens: 1500 });
+    const text = reportData.content?.[0]?.text || 'Report generation failed. Please try again.';
     document.getElementById('report-title').textContent = 'Your business report — ' + f.biz;
-    document.getElementById('report-container').innerHTML =
-      `<div class="report-card"><p class="report-text">${text.replace(/\n/g,'<br>')}</p></div>`;
+    document.getElementById('report-container').innerHTML = `<div class="report-card"><p class="report-text">${text.replace(/\n/g,'<br>')}</p></div>`;
+
   } catch(err) {
-    document.getElementById('report-container').innerHTML = `<div class="error-msg">Report generation failed. Please try again.</div>`;
+    showCodeError('Verification failed. Please try again.');
+    document.getElementById('report-container').innerHTML = '';
   }
+
+  unlockBtn.textContent = 'Unlock';
+  unlockBtn.disabled = false;
+}
+
+function showCodeError(msg) {
+  const el = document.getElementById('code-error');
+  el.textContent = msg;
+  el.style.display = 'block';
 }
 </script>
 </body>
