@@ -73,13 +73,26 @@
   .email-row input:focus { border-color: var(--navy); }
   .email-row button { padding: 10px 16px; background: var(--navy); color: var(--white); border: none; border-radius: var(--radius); font-size: 14px; font-weight: 500; cursor: pointer; white-space: nowrap; }
   .email-confirm { font-size: 12px; color: var(--success); margin: 6px 0 0; display: none; }
-  .cta-card { background: var(--card); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem; }
-  .cta-title { font-size: 16px; font-weight: 500; color: var(--text); margin: 0 0 6px; }
-  .cta-sub { font-size: 13px; color: var(--muted); margin: 0 0 8px; line-height: 1.6; }
-  .cta-zero { font-size: 12px; color: var(--success); font-weight: 500; margin: 0 0 12px; }
-  .cta-btn { display: block; width: 100%; padding: 14px; background: var(--navy); color: var(--white); border: none; border-radius: var(--radius-lg); font-size: 15px; font-weight: 500; cursor: pointer; text-align: center; text-decoration: none; margin-bottom: 10px; }
-  .cta-btn:hover { opacity: 0.9; }
-  .demo-link { display: block; font-size: 13px; color: var(--muted); text-align: center; text-decoration: underline; cursor: pointer; background: none; border: none; width: 100%; text-decoration: underline; }
+  /* ===== UPDATED CTA SECTION ===== */
+  .fix-section { margin-top: 1.5rem; }
+  .fix-label { font-size: 11px; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1rem; }
+  .fix-card { background: var(--card); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem; margin-bottom: 12px; position: relative; }
+  .fix-card-featured { border: 2px solid var(--gold); }
+  .fix-card-badge { font-size: 11px; font-weight: 500; color: var(--navy); background: var(--gold); padding: 3px 10px; border-radius: var(--radius); display: inline-block; margin-bottom: 10px; }
+  .fix-card-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; }
+  .fix-tier { font-size: 12px; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+  .fix-price { font-size: 26px; font-weight: 500; color: var(--text); }
+  .fix-price-note { font-size: 12px; color: var(--muted); font-weight: 400; }
+  .fix-title { font-size: 16px; font-weight: 500; color: var(--text); margin-bottom: 6px; }
+  .fix-desc { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 12px; }
+  .fix-list { font-size: 13px; color: var(--muted); padding-left: 1.2rem; margin-bottom: 14px; }
+  .fix-list li { margin-bottom: 4px; line-height: 1.5; }
+  .fix-btn { display: block; width: 100%; padding: 13px; background: var(--navy); color: var(--white); border: none; border-radius: var(--radius-lg); font-size: 14px; font-weight: 500; text-align: center; text-decoration: none; margin-bottom: 8px; }
+  .fix-btn:hover { opacity: 0.9; }
+  .fix-btn-ghost { background: transparent; color: var(--muted); border: 0.5px solid var(--border); font-size: 13px; }
+  .fix-btn-gold { background: var(--gold); color: var(--navy); }
+  .fix-footnote { font-size: 12px; color: var(--hint); text-align: center; margin-top: 4px; line-height: 1.6; }
+  /* ===== END UPDATED CTA SECTION ===== */
   .footer { text-align: center; padding: 2rem 0 1rem; font-size: 12px; color: var(--hint); }
   .footer a { color: var(--gold); text-decoration: none; }
   @media (max-width: 480px) {
@@ -164,16 +177,47 @@
     </div>
     <p class="email-confirm" id="email-confirm">On its way — check your inbox.</p>
   </div>
-  <div class="cta-card">
-    <p class="cta-title" id="cta-title">Get 5 messages personalized to your business — send tonight</p>
-    <p class="cta-sub">Answer 6 questions. Get professional missed-call messages written for your exact trade, your name, and your service area. Copy and send immediately. Reuse for every missed call, forever.</p>
-    <p class="cta-zero">Zero subscriptions required. Zero tech setup. $47 one-time.</p>
-    <a class="cta-btn" href="https://payhip.com/ThePromptSanctum" target="_blank">Get my personalized messages — $47</a>
-    <a class="demo-link" href="/message-kit">Try the free message preview first</a>
+
+  <!-- ===== UPDATED CTA SECTION ===== -->
+  <div class="fix-section">
+    <p class="fix-label" id="fix-label">Fix the leak — choose your path</p>
+
+    <div class="fix-card">
+      <div class="fix-card-header">
+        <span class="fix-tier">IndOp 1-A</span>
+        <span class="fix-price">$47 <span class="fix-price-note">one-time</span></span>
+      </div>
+      <p class="fix-title">DIY Build Guide</p>
+      <p class="fix-desc">Complete 31-step automation guide in plain English. Build it yourself — screen-level descriptions at every step, warning boxes at every failure point. All 5 message templates included. Zero subscriptions to us, ever.</p>
+      <a class="fix-btn" href="https://payhip.com/b/QzScA" target="_blank">Get the DIY guide — $47 &#8599;</a>
+      <a class="fix-btn fix-btn-ghost" href="/message-kit">Try the free message preview first</a>
+    </div>
+
+    <div class="fix-card fix-card-featured">
+      <span class="fix-card-badge">Most complete</span>
+      <div class="fix-card-header">
+        <span class="fix-tier">IndOp 1-B</span>
+        <span class="fix-price">$97 <span class="fix-price-note">one-time</span></span>
+      </div>
+      <p class="fix-title">Complete Build Package + Claude AI Build Coach</p>
+      <p class="fix-desc">Everything in the $47 guide plus Claude AI walks beside you through every step — paste one file into Claude.ai (free), Claude learns your business in 5 questions and guides the full build from Step 1 to go-live. Includes your personalized business report.</p>
+      <ul class="fix-list">
+        <li>31-step build guide — 5 phases, 12 milestones</li>
+        <li>Claude AI Build Coach — guided build, adapted to your trade and skill level</li>
+        <li>5 personalized messages + personalized business ROI report</li>
+        <li>Nomorobo spam filter setup included</li>
+        <li>Claude.ai free account is sufficient — no paid subscription needed</li>
+      </ul>
+      <a class="fix-btn fix-btn-gold" href="https://payhip.com/b/6zeiv" target="_blank">Get the complete package — $97 &#8599;</a>
+    </div>
+
+    <p class="fix-footnote">Running costs: ~$20–22/month to Twilio, Make.com &amp; Anthropic. No monthly fee to us. Ever. You own the system.</p>
   </div>
+  <!-- ===== END UPDATED CTA SECTION ===== -->
+
   <div class="footer">
-    <p>© 2026 The Prompt Sanctum · <a href="https://payhip.com/ThePromptSanctum">payhip.com/ThePromptSanctum</a></p>
-    <p style="margin-top:4px;">IndOp Series — AI tools built for independent operators</p>
+    <p>&#169; 2026 The Prompt Sanctum&#8482; &middot; <a href="https://payhip.com/ThePromptSanctum">payhip.com/ThePromptSanctum</a></p>
+    <p style="margin-top:4px;">IndOp&#8482; Series — AI tools built for independent operators</p>
   </div>
 </div>
 <script>
@@ -203,7 +247,7 @@ function updateCalc() {
   document.getElementById('monthly-loss').textContent = '$' + monthly.toLocaleString();
   document.getElementById('annual-loss').textContent = '$' + annual.toLocaleString() + ' per year';
   document.getElementById('explain-text').textContent = 'Of your ' + w + ' weekly calls, roughly ' + missed + ' go unanswered while you\'re working (' + Math.round(missRate*100) + '% miss rate). About ' + leads + ' of those are genuine new customer leads. Most never leave a voicemail — they call the next ' + tradeSelected.toLowerCase() + ' contractor immediately. Based on a $' + leadValue + ' average missed lead value for ' + tradeSelected + ' (Contractor Magazine 2024).';
-  document.getElementById('cta-title').textContent = 'Fix the $' + monthly.toLocaleString() + '/month leak — get your messages tonight';
+  document.getElementById('fix-label').textContent = 'Fix the $' + monthly.toLocaleString() + '/month leak — choose your path';
 }
 function submitEmail() {
   const email = document.getElementById('email-input').value.trim();
