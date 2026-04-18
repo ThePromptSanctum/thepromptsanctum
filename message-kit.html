@@ -222,37 +222,37 @@ Est. job: $280-450 service call</p>
         </ul>
         <div class="price-row">
           <span class="price-big">$47</span>
-          <span class="price-note">one-time &middot; zero subscriptions &middot; license key delivered by email</span>
+          <span class="price-note">one-time &middot; zero subscriptions &middot; PDF delivered instantly by email</span>
         </div>
-        <a class="buy-btn" href="PAYHIP_47_URL" target="_blank" id="buy-47-btn">Get all 5 messages — $47 &#8599;</a>
+        <a class="buy-btn" href="https://payhip.com/b/QzScA" target="_blank" id="buy-47-btn">Get all 5 messages — $47 &#8599;</a>
 
         <hr style="margin: 1.2rem 0;">
 
         <p class="pw-title">Want the system to run automatically? — $97</p>
-        <p class="pw-sub">The $97 Build Package includes everything in the $47 kit plus the complete 36-step automation build guide that makes all 5 messages fire sequentially 24/7, plus your personalized business report.</p>
+        <p class="pw-sub">The $97 Complete Build Package includes everything in the $47 kit plus the complete 31-step automation build guide, the Claude AI Build Coach, and your personalized business report — all delivered instantly.</p>
         <ul class="include-list">
           <li>Everything in the $47 kit</li>
-          <li>36-step build guide — complete Twilio + Make.com automation, plain English</li>
-          <li>Claude Build Coach — paste into Claude.ai free, get a personal AI assistant for your build</li>
+          <li>31-step build guide — complete Twilio + Make.com automation, plain English</li>
+          <li>Claude AI Build Coach — paste into Claude.ai free, Claude guides every step adapted to your trade</li>
+          <li>Personalized business report — recovery timeline, ROI, and 90-day plan (license key required)</li>
           <li>Nomorobo spam filter — blocks robocalls automatically (~$0.50/mo)</li>
-          <li>Personalized business report — recovery timeline, ROI, and 90-day plan</li>
         </ul>
-        <div class="cost-warn">Important: The $97 build package requires $15 to start + approximately $20-22/month in tool subscriptions (Twilio ~$15/mo, Make.com free, Claude API ~$1-3/mo, spam filter ~$0.50/mo). Stated upfront — no surprises.</div>
+        <div class="cost-warn">Running costs: ~$20-22/month to Twilio, Make.com, and Anthropic. No monthly fee to us. Ever. Claude.ai free account is sufficient — no paid subscription required.</div>
         <div class="price-row">
           <span class="price-big">$97</span>
-          <span class="price-note">one-time &middot; build guide PDF + license key delivered by email instantly</span>
+          <span class="price-note">one-time &middot; PDF + Claude AI Build Coach + license key delivered instantly</span>
         </div>
-        <a class="buy-btn" href="PAYHIP_97_URL" target="_blank" id="buy-97-btn">Get the complete $97 build package &#8599;</a>
+        <a class="buy-btn" href="https://payhip.com/b/6zeiv" target="_blank" id="buy-97-btn">Get the complete $97 build package &#8599;</a>
         <a class="buy-btn secondary" href="/">&#8592; Back to the free revenue calculator</a>
 
         <div class="access-section">
           <p class="access-title">Already purchased? Enter your license key here</p>
-          <p class="access-sub">After buying on Payhip your unique license key is delivered by email. Fill in your business details above first, then enter your key below. Each key is single-use and tied to your purchase.</p>
+          <p class="access-sub">After buying the $97 package on Payhip, your unique license key is delivered by email. Fill in your business details above first, then enter your key below to unlock your personalized business report.</p>
           <div class="access-row">
             <input type="text" id="access-code" placeholder="ENTER LICENSE KEY FROM YOUR EMAIL">
             <button onclick="unlockReport()">Unlock</button>
           </div>
-          <p class="code-error" id="code-error">License key not recognized or already used. Check your Payhip purchase email.</p>
+          <p class="code-error" id="code-error">License key not recognized or already used. Check your Payhip purchase email or contact cadcaddyapp@gmail.com</p>
           <p class="code-success" id="code-success">License key verified. Generating your business report...</p>
         </div>
       </div>
@@ -268,8 +268,8 @@ Est. job: $280-450 service call</p>
   </div>
 
   <div class="footer">
-    <p>&#169; 2026 The Prompt Sanctum &middot; <a href="https://payhip.com/ThePromptSanctum">payhip.com/ThePromptSanctum</a></p>
-    <p style="margin-top:4px;">IndOp Series — AI tools built for independent operators</p>
+    <p>&#169; 2026 The Prompt Sanctum&#8482; &middot; <a href="https://payhip.com/ThePromptSanctum">payhip.com/ThePromptSanctum</a></p>
+    <p style="margin-top:4px;">IndOp&#8482; Series — AI tools built for independent operators</p>
   </div>
 </div>
 
@@ -395,12 +395,12 @@ async function unlockReport() {
   try {
     const validationResult = await callProxy({
       licenseKey: licenseKey,
-      productLink: 'PAYHIP_97_URL',
+      productLink: 'https://payhip.com/b/6zeiv',
       validateOnly: true
     });
 
     if (!validationResult.valid) {
-      showCodeError(validationResult.error || 'License key not recognized. Check your Payhip purchase email.');
+      showCodeError(validationResult.error || 'License key not recognized. Check your Payhip purchase email or contact cadcaddyapp@gmail.com');
       unlockBtn.textContent = 'Unlock';
       unlockBtn.disabled = false;
       return;
@@ -435,7 +435,7 @@ Write directly to ${f.owner}. Be a trusted business advisor.`;
     document.getElementById('report-container').innerHTML = `<div class="report-card"><p class="report-text">${text.replace(/\n/g,'<br>')}</p></div>`;
 
   } catch(err) {
-    showCodeError('Verification failed. Please try again.');
+    showCodeError('Verification failed. Please try again or contact cadcaddyapp@gmail.com');
     document.getElementById('report-container').innerHTML = '';
   }
 
