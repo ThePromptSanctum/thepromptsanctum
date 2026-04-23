@@ -4,263 +4,714 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Revenue Leak Calculator — The Prompt Sanctum</title>
-<meta name="description" content="Find out exactly how much missed calls are costing your trades business every month. Free calculator for HVAC, plumbing, electrical, roofing, and cleaning contractors.">
+<meta name="description" content="Find out exactly how much missed calls are costing your trades business every month.">
 <meta property="og:title" content="How much are missed calls costing your business?">
 <meta property="og:description" content="Free calculator for trades contractors. See your real number in seconds.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --navy: #0A1628; --gold: #C9A84C; --white: #ffffff;
-    --bg: #f9f9f7; --card: #ffffff; --border: #e0e0d8;
-    --text: #1a1a1a; --muted: #666660; --hint: #999990;
-    --danger: #c0392b; --success: #1a6b3a; --success-bg: #eaf3de;
-    --warning-bg: #fff8e7; --warning: #7a5800;
-    --info-bg: #e6f1fb; --info: #0c447c;
-    --radius: 8px; --radius-lg: 12px;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #111111; --card: #1c1c1c; --border: #333333;
-      --text: #f0f0ee; --muted: #aaaaaa; --hint: #777777;
-      --success-bg: #0d2b1a; --success: #5dcaa5;
-      --warning-bg: #2a2000; --warning: #f0b429;
-      --info-bg: #0c1e30; --info: #85b7eb;
-    }
-  }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); font-size: 16px; line-height: 1.6; min-height: 100vh; }
-  .top-bar { background: var(--navy); padding: 10px 1.25rem; text-align: center; }
-  .top-bar a { color: var(--gold); font-size: 13px; text-decoration: none; font-weight: 500; }
-  .page { max-width: 680px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
-  h1 { font-size: 22px; font-weight: 500; color: var(--text); margin: 0 0 6px; line-height: 1.3; }
-  .sub { font-size: 15px; color: var(--muted); margin: 0 0 1.5rem; }
-  .testimonial { background: var(--card); border-left: 3px solid var(--success); border-radius: 0 var(--radius) var(--radius) 0; padding: 10px 14px; margin-bottom: 1.5rem; border: 0.5px solid var(--border); border-left: 3px solid var(--success); }
-  .test-text { font-size: 13px; color: var(--text); margin: 0 0 3px; font-style: italic; line-height: 1.5; }
-  .test-attr { font-size: 11px; color: var(--muted); margin: 0; }
-  .field-group { margin-bottom: 1.4rem; }
-  .field-group label { display: block; font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 6px; }
-  .field-hint { font-size: 12px; color: var(--hint); margin: 0 0 8px; font-style: italic; }
-  .trade-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-  .staff-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-  .sel-btn { padding: 12px 10px; border: 0.5px solid var(--border); border-radius: var(--radius); background: var(--card); cursor: pointer; font-size: 13px; color: var(--text); text-align: left; width: 100%; }
-  .sel-btn .btn-title { font-weight: 500; display: block; font-size: 13px; }
-  .sel-btn .btn-sub { font-size: 11px; color: var(--muted); display: block; margin-top: 2px; }
-  .sel-btn.selected { border: 2px solid var(--info); background: var(--info-bg); }
-  .sel-btn.selected .btn-title { color: var(--info); }
-  .sel-btn.selected .btn-sub { color: var(--info); }
-  .slider-wrap { display: flex; align-items: center; gap: 12px; }
-  input[type=range] { flex: 1; height: 4px; accent-color: var(--gold); cursor: pointer; background: var(--border); border-radius: 2px; }
-  .slider-val { font-size: 14px; font-weight: 500; min-width: 58px; text-align: right; color: var(--text); }
-  .warn-note { font-size: 12px; color: var(--warning); background: var(--warning-bg); border-radius: var(--radius); padding: 7px 10px; margin-top: 8px; display: block; line-height: 1.5; }
-  hr { border: none; border-top: 0.5px solid var(--border); margin: 1.5rem 0; }
-  .gap-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 1rem; }
-  .gap-card { background: var(--card); border: 0.5px solid var(--border); border-radius: var(--radius); padding: 14px; }
-  .gap-label { font-size: 11px; color: var(--muted); margin: 0 0 4px; text-transform: uppercase; letter-spacing: 0.06em; }
-  .gap-value { font-size: 24px; font-weight: 500; margin: 0; color: var(--text); }
-  .gap-value.red { color: var(--danger); }
-  .gap-note { font-size: 11px; color: var(--hint); margin: 4px 0 0; line-height: 1.4; }
-  .explain-box { background: var(--card); border: 0.5px solid var(--border); border-radius: var(--radius); padding: 12px 14px; margin-bottom: 1rem; }
-  .explain-text { font-size: 13px; color: var(--muted); margin: 0; line-height: 1.6; }
-  .main-card { background: var(--card); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1.5rem; text-align: center; margin-bottom: 6px; }
-  .main-label { font-size: 11px; color: var(--muted); margin: 0 0 8px; text-transform: uppercase; letter-spacing: 0.08em; }
-  .main-monthly { font-size: 48px; font-weight: 500; color: var(--danger); margin: 0; line-height: 1; }
-  .main-annual { font-size: 15px; color: var(--muted); margin: 8px 0 0; }
-  .source-line { font-size: 11px; color: var(--hint); text-align: center; margin: 0 0 1.2rem; }
-  .email-section { background: var(--card); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem; margin-bottom: 1rem; }
-  .email-title { font-size: 14px; font-weight: 500; color: var(--text); margin: 0 0 4px; }
-  .email-sub { font-size: 12px; color: var(--muted); margin: 0 0 10px; }
-  .email-row { display: flex; gap: 8px; }
-  .email-row input { flex: 1; padding: 10px 12px; border: 0.5px solid var(--border); border-radius: var(--radius); font-size: 14px; background: var(--bg); color: var(--text); outline: none; }
-  .email-row input:focus { border-color: var(--navy); }
-  .email-row button { padding: 10px 16px; background: var(--navy); color: var(--white); border: none; border-radius: var(--radius); font-size: 14px; font-weight: 500; cursor: pointer; white-space: nowrap; }
-  .email-confirm { font-size: 12px; color: var(--success); margin: 6px 0 0; display: none; }
-  /* ===== UPDATED CTA SECTION ===== */
-  .fix-section { margin-top: 1.5rem; }
-  .fix-label { font-size: 11px; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1rem; }
-  .fix-card { background: var(--card); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem; margin-bottom: 12px; position: relative; }
-  .fix-card-featured { border: 2px solid var(--gold); }
-  .fix-card-badge { font-size: 11px; font-weight: 500; color: var(--navy); background: var(--gold); padding: 3px 10px; border-radius: var(--radius); display: inline-block; margin-bottom: 10px; }
-  .fix-card-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; }
-  .fix-tier { font-size: 12px; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
-  .fix-price { font-size: 26px; font-weight: 500; color: var(--text); }
-  .fix-price-note { font-size: 12px; color: var(--muted); font-weight: 400; }
-  .fix-title { font-size: 16px; font-weight: 500; color: var(--text); margin-bottom: 6px; }
-  .fix-desc { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 12px; }
-  .fix-list { font-size: 13px; color: var(--muted); padding-left: 1.2rem; margin-bottom: 14px; }
-  .fix-list li { margin-bottom: 4px; line-height: 1.5; }
-  .fix-btn { display: block; width: 100%; padding: 13px; background: var(--navy); color: var(--white); border: none; border-radius: var(--radius-lg); font-size: 14px; font-weight: 500; text-align: center; text-decoration: none; margin-bottom: 8px; }
-  .fix-btn:hover { opacity: 0.9; }
-  .fix-btn-ghost { background: transparent; color: var(--muted); border: 0.5px solid var(--border); font-size: 13px; }
-  .fix-btn-gold { background: var(--gold); color: var(--navy); }
-  .fix-footnote { font-size: 12px; color: var(--hint); text-align: center; margin-top: 4px; line-height: 1.6; }
-  /* ===== END UPDATED CTA SECTION ===== */
-  .footer { text-align: center; padding: 2rem 0 1rem; font-size: 12px; color: var(--hint); }
-  .footer a { color: var(--gold); text-decoration: none; }
-  @media (max-width: 480px) {
-    .trade-grid { grid-template-columns: repeat(2, 1fr); }
-    .main-monthly { font-size: 40px; }
-    h1 { font-size: 20px; }
-  }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --navy: #0C1A2E; --navy-2: #162440; --navy-3: #1e3054;
+  --gold: #C9A84C; --gold-lite: #e8c96a; --gold-pale: #fdf6e3; --gold-border: #e8d5a3;
+  --white: #fff; --cream: #faf8f4; --warm: #f3f0ea;
+  --border: #e4ddd0; --border-2: #cfc8bc;
+  --text: #1c1917; --mid: #44403c; --muted: #78716c; --hint: #a8a29e;
+  --red: #b91c1c; --red-2: #dc2626; --red-bg: #fef2f2; --red-border: #fca5a5;
+  --green: #166534; --green-2: #16a34a; --green-bg: #f0fdf4; --green-border: #86efac;
+  --blue: #1e3a8a; --blue-bg: #eff6ff; --blue-border: #bfdbfe;
+  --amber: #92400e; --amber-bg: #fffbeb; --amber-border: #fde68a;
+  --r: 10px; --r-lg: 16px; --r-xl: 22px;
+  --sh-sm: 0 1px 3px rgba(12,26,46,.08),0 1px 2px rgba(12,26,46,.04);
+  --sh: 0 4px 14px rgba(12,26,46,.1),0 2px 4px rgba(12,26,46,.06);
+  --sh-lg: 0 12px 36px rgba(12,26,46,.14),0 4px 8px rgba(12,26,46,.08);
+}
+html { scroll-behavior: smooth; }
+body { font-family:'DM Sans',-apple-system,sans-serif; background:var(--cream); color:var(--text); font-size:15px; line-height:1.6; min-height:100vh; }
+
+.top-bar { background:var(--navy); border-bottom:2px solid var(--gold); padding:10px 1.5rem; text-align:center; }
+.top-bar a { color:var(--gold); font-size:12.5px; font-weight:600; text-decoration:none; letter-spacing:.02em; }
+.top-bar a:hover { color:var(--gold-lite); }
+
+.page { max-width:680px; margin:0 auto; padding:2rem 1.25rem 5rem; }
+
+.eyebrow { display:inline-flex; align-items:center; gap:5px; font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--gold); background:var(--gold-pale); border:1px solid var(--gold-border); padding:3px 10px; border-radius:20px; margin-bottom:12px; }
+.eyebrow::before { content:'◆'; font-size:7px; }
+h1 { font-family:'DM Serif Display',Georgia,serif; font-size:28px; font-weight:400; color:var(--navy); line-height:1.2; margin:0 0 8px; }
+h1 em { font-style:normal; color:var(--red); }
+.hero-sub { font-size:14.5px; color:var(--muted); margin:0 0 1.5rem; }
+
+.testi { background:var(--white); border:1px solid var(--border); border-left:3px solid var(--green-2); border-radius:0 var(--r) var(--r) 0; padding:11px 15px; margin-bottom:1.75rem; box-shadow:var(--sh-sm); }
+.testi-text { font-size:13px; color:var(--mid); font-style:italic; line-height:1.6; margin:0 0 3px; }
+.testi-attr { font-size:11px; color:var(--muted); font-weight:600; margin:0; }
+
+.card { background:var(--white); border:1px solid var(--border); border-radius:var(--r-lg); padding:1.375rem 1.5rem; margin-bottom:.875rem; box-shadow:var(--sh-sm); }
+.card-label { font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:var(--muted); border-bottom:1px solid var(--border); padding-bottom:8px; margin-bottom:1.25rem; display:flex; align-items:center; gap:7px; }
+.step-dot { width:18px; height:18px; border-radius:50%; background:var(--navy); color:var(--white); font-size:10px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+
+.f-label { font-size:13px; font-weight:600; color:var(--text); display:block; margin-bottom:5px; }
+.f-hint { font-size:11.5px; color:var(--hint); font-style:italic; margin:0 0 8px; }
+.text-input { width:100%; padding:10px 13px; border:1.5px solid var(--border); border-radius:var(--r); font-size:13.5px; font-family:'DM Sans',sans-serif; background:var(--cream); color:var(--text); outline:none; transition:border-color .15s; }
+.text-input:focus { border-color:var(--navy); background:var(--white); }
+.text-input::placeholder { color:var(--hint); }
+.num-input { width:100%; padding:9px 12px; border:1.5px solid var(--border); border-radius:var(--r); font-size:13.5px; font-family:'DM Sans',sans-serif; background:var(--cream); color:var(--text); outline:none; transition:border-color .15s; }
+.num-input:focus { border-color:var(--navy); background:var(--white); }
+
+.trade-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:7px; }
+.t-btn { padding:10px 9px; border:1.5px solid var(--border); border-radius:var(--r); background:var(--cream); cursor:pointer; text-align:left; width:100%; transition:all .15s; }
+.t-btn:hover { border-color:var(--border-2); background:var(--gold-pale); }
+.t-btn .t-name { font-size:12.5px; font-weight:600; color:var(--text); display:block; }
+.t-btn .t-val { font-size:11px; color:var(--muted); display:block; margin-top:1px; }
+.t-btn.on { border-color:var(--navy); background:var(--navy); }
+.t-btn.on .t-name { color:var(--white); }
+.t-btn.on .t-val { color:var(--gold); }
+
+.sl-wrap { margin-bottom:.25rem; }
+.sl-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
+.sl-label { font-size:13px; font-weight:600; color:var(--text); }
+.sl-badge { font-family:'DM Serif Display',serif; font-size:24px; color:var(--navy); background:var(--gold-pale); border:1px solid var(--gold-border); padding:2px 11px; border-radius:8px; line-height:1.35; min-width:64px; text-align:center; }
+input[type=range] { width:100%; height:6px; -webkit-appearance:none; appearance:none; background:linear-gradient(to right,var(--navy) var(--p,25%),var(--border) var(--p,25%)); border-radius:3px; cursor:pointer; outline:none; }
+input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; width:20px; height:20px; border-radius:50%; background:var(--white); border:2.5px solid var(--navy); box-shadow:0 2px 5px rgba(0,0,0,.18); cursor:pointer; }
+input[type=range]::-moz-range-thumb { width:20px; height:20px; border-radius:50%; background:var(--white); border:2.5px solid var(--navy); cursor:pointer; }
+.sl-ticks { display:flex; justify-content:space-between; font-size:10.5px; color:var(--hint); margin-top:3px; }
+
+.staff-grid { display:grid; grid-template-columns:1fr 1fr; gap:9px; margin-top:.5rem; }
+.s-btn { padding:12px 13px; border:1.5px solid var(--border); border-radius:var(--r); background:var(--cream); cursor:pointer; text-align:left; width:100%; transition:all .15s; }
+.s-btn:hover { border-color:var(--border-2); }
+.s-btn .s-name { font-size:13px; font-weight:600; color:var(--text); display:block; }
+.s-btn .s-sub { font-size:11px; color:var(--muted); display:block; margin-top:3px; line-height:1.4; }
+.s-btn.on { border-color:var(--navy); background:var(--navy); }
+.s-btn.on .s-name { color:var(--white); }
+.s-btn.on .s-sub { color:var(--gold); }
+
+.tune-row { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.tune-cell label { font-size:12px; font-weight:600; color:var(--mid); display:block; margin-bottom:4px; }
+.tune-cell .t-hint { font-size:11px; color:var(--hint); margin-top:3px; }
+.warn { font-size:11.5px; color:var(--amber); background:var(--amber-bg); border:1px solid var(--amber-border); border-radius:var(--r); padding:7px 11px; margin-top:9px; line-height:1.5; }
+
+/* RESULTS */
+.funnel-card { background:var(--white); border:1px solid var(--border); border-radius:var(--r-lg); padding:1.375rem 1.5rem; margin-bottom:.875rem; box-shadow:var(--sh-sm); }
+.chart-title { font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.09em; color:var(--muted); margin-bottom:1rem; }
+.funnel-bars { display:flex; flex-direction:column; gap:9px; }
+.f-row { display:grid; grid-template-columns:120px 1fr 46px; align-items:center; gap:10px; }
+.f-row-label { font-size:12px; color:var(--mid); font-weight:500; text-align:right; }
+.f-bar-track { height:24px; background:var(--warm); border-radius:5px; overflow:hidden; }
+.f-bar-fill { height:100%; border-radius:5px; transition:width .5s cubic-bezier(.25,.8,.25,1); min-width:6px; display:flex; align-items:center; padding-left:8px; }
+.f-bar-fill span { font-size:10.5px; font-weight:600; color:rgba(255,255,255,.9); white-space:nowrap; pointer-events:none; }
+.f-bar-fill.c-total { background:linear-gradient(90deg,#2563eb,#3b82f6); }
+.f-bar-fill.c-answered { background:linear-gradient(90deg,#15803d,#22c55e); }
+.f-bar-fill.c-missed { background:linear-gradient(90deg,#b45309,#f59e0b); }
+.f-bar-fill.c-leads { background:linear-gradient(90deg,#991b1b,#ef4444); }
+.f-row-count { font-size:13px; font-weight:600; color:var(--text); text-align:right; }
+
+.charts-row { display:grid; grid-template-columns:1fr 1fr; gap:.875rem; margin-bottom:.875rem; }
+.chart-card { background:var(--white); border:1px solid var(--border); border-radius:var(--r-lg); padding:1.2rem; box-shadow:var(--sh-sm); }
+.donut-wrap { position:relative; width:108px; height:108px; margin:0 auto 1rem; }
+.donut-wrap svg { transform:rotate(-90deg); }
+.donut-center { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+.donut-pct { font-family:'DM Serif Display',serif; font-size:22px; color:var(--red); line-height:1; }
+.donut-sub { font-size:10px; color:var(--muted); text-align:center; margin-top:1px; line-height:1.3; }
+.donut-legend { display:flex; flex-direction:column; gap:5px; }
+.leg-row { display:flex; align-items:center; gap:7px; font-size:11.5px; color:var(--mid); }
+.leg-dot { width:9px; height:9px; border-radius:50%; flex-shrink:0; }
+
+.bar-compare { display:flex; flex-direction:column; gap:9px; }
+.bc-row { }
+.bc-lbl { font-size:11.5px; font-weight:600; color:var(--mid); margin-bottom:3px; display:flex; justify-content:space-between; }
+.bc-track { height:20px; background:var(--warm); border-radius:4px; overflow:hidden; }
+.bc-fill { height:100%; border-radius:4px; transition:width .5s cubic-bezier(.25,.8,.25,1); }
+.bc-fill.lost { background:linear-gradient(90deg,#b91c1c,#ef4444); }
+.bc-fill.gain { background:linear-gradient(90deg,#166534,#22c55e); }
+
+.result-hero { background:var(--navy); border-radius:var(--r-xl); padding:2rem 1.75rem 1.75rem; text-align:center; margin-bottom:.875rem; position:relative; overflow:hidden; box-shadow:var(--sh-lg); }
+.result-hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 70% 0,rgba(201,168,76,.2) 0,transparent 65%); pointer-events:none; }
+.rh-eye { font-size:10px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--gold); margin:0 0 8px; position:relative; }
+.rh-monthly { font-family:'DM Serif Display',serif; font-size:64px; color:var(--white); line-height:1; margin:0; position:relative; }
+.rh-annual { font-size:14px; color:rgba(255,255,255,.55); margin:8px 0 18px; position:relative; }
+.rh-annual strong { color:rgba(255,255,255,.9); }
+.rh-5yr { display:inline-block; background:rgba(201,168,76,.14); border:1px solid rgba(201,168,76,.32); border-radius:10px; padding:8px 18px; position:relative; }
+.rh-5yr-lbl { font-size:10px; color:rgba(255,255,255,.48); font-weight:700; letter-spacing:.08em; text-transform:uppercase; }
+.rh-5yr-val { font-family:'DM Serif Display',serif; font-size:30px; color:var(--gold); line-height:1.1; }
+.rh-5yr-note { font-size:10px; color:rgba(255,255,255,.38); margin-top:2px; }
+
+.compare-card { background:var(--white); border:1px solid var(--border); border-radius:var(--r-lg); padding:1.375rem 1.5rem; margin-bottom:.875rem; box-shadow:var(--sh-sm); }
+.compare-cols { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.cc { border-radius:var(--r); padding:14px; }
+.cc.now { background:var(--red-bg); border:1px solid var(--red-border); }
+.cc.fixed { background:var(--green-bg); border:1px solid var(--green-border); }
+.cc-lbl { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.09em; margin-bottom:5px; }
+.cc-lbl.r { color:var(--red); }
+.cc-lbl.g { color:var(--green); }
+.cc-num { font-family:'DM Serif Display',serif; font-size:30px; line-height:1; }
+.cc-num.r { color:var(--red-2); }
+.cc-num.g { color:var(--green-2); }
+.cc-sub { font-size:11.5px; color:var(--muted); margin-top:4px; line-height:1.45; }
+
+.explain { background:var(--blue-bg); border:1px solid var(--blue-border); border-radius:var(--r); padding:11px 14px; margin-bottom:.875rem; }
+.explain p { font-size:12.5px; color:var(--blue); line-height:1.65; margin:0; }
+
+.share-card { background:var(--white); border:1px solid var(--border); border-radius:var(--r-lg); padding:1.375rem 1.5rem; margin-bottom:.875rem; box-shadow:var(--sh-sm); }
+.share-row { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.share-text h3 { font-size:14px; font-weight:600; color:var(--text); margin-bottom:3px; }
+.share-text p { font-size:12px; color:var(--muted); line-height:1.5; }
+.share-btn { flex-shrink:0; display:flex; align-items:center; gap:6px; padding:10px 16px; background:var(--gold); color:var(--navy); border:none; border-radius:var(--r); cursor:pointer; font-size:13px; font-weight:700; font-family:'DM Sans',sans-serif; white-space:nowrap; box-shadow:var(--sh-sm); transition:background .15s; }
+.share-btn:hover { background:var(--gold-lite); }
+.share-btn svg { width:15px; height:15px; }
+
+.email-card { background:var(--green-bg); border:1px solid var(--green-border); border-radius:var(--r-lg); padding:1.375rem 1.5rem; margin-bottom:.875rem; }
+.email-h { font-size:14px; font-weight:600; color:var(--green); margin-bottom:3px; }
+.email-sub { font-size:12px; color:#166534cc; margin:0 0 10px; }
+.email-row { display:flex; gap:7px; }
+.email-row input { flex:1; padding:10px 12px; border:1.5px solid var(--green-border); border-radius:var(--r); font-size:13.5px; background:var(--white); color:var(--text); font-family:'DM Sans',sans-serif; outline:none; }
+.email-row input:focus { border-color:var(--green); }
+.email-row button { padding:10px 15px; background:var(--green); color:var(--white); border:none; border-radius:var(--r); font-size:13px; font-weight:600; cursor:pointer; font-family:'DM Sans',sans-serif; white-space:nowrap; transition:opacity .15s; }
+.email-row button:hover { opacity:.88; }
+.email-ok { font-size:12px; color:var(--green); margin:5px 0 0; font-weight:600; display:none; }
+
+.prod-label { font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:var(--muted); margin-bottom:.875rem; }
+.prod-card { background:var(--white); border:1.5px solid var(--border); border-radius:var(--r-lg); padding:1.375rem; margin-bottom:.75rem; box-shadow:var(--sh-sm); transition:box-shadow .2s; }
+.prod-card:hover { box-shadow:var(--sh); }
+.prod-card.feat { border-color:var(--gold); background:#fffdf5; }
+.prod-badge { font-size:10.5px; font-weight:700; color:var(--navy); background:var(--gold); padding:2px 9px; border-radius:20px; display:inline-block; margin-bottom:9px; }
+.prod-top { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:5px; }
+.prod-tier { font-size:10.5px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.09em; }
+.prod-price { font-family:'DM Serif Display',serif; font-size:26px; color:var(--text); }
+.prod-price-note { font-size:12px; color:var(--muted); font-family:'DM Sans',sans-serif; }
+.prod-title { font-size:15px; font-weight:600; color:var(--text); margin-bottom:5px; }
+.prod-desc { font-size:12.5px; color:var(--muted); line-height:1.65; margin-bottom:11px; }
+.prod-list { list-style:none; margin-bottom:13px; }
+.prod-list li { font-size:12.5px; color:var(--muted); padding:3px 0 3px 17px; position:relative; line-height:1.5; }
+.prod-list li::before { content:'✓'; position:absolute; left:0; color:var(--green-2); font-weight:700; }
+.prod-btn { display:block; width:100%; padding:12px; border:none; border-radius:12px; font-size:13.5px; font-weight:600; text-align:center; text-decoration:none; cursor:pointer; font-family:'DM Sans',sans-serif; transition:opacity .15s; margin-bottom:7px; }
+.prod-btn:hover { opacity:.88; }
+.prod-btn.navy { background:var(--navy); color:var(--white); }
+.prod-btn.gold { background:var(--gold); color:var(--navy); }
+.prod-btn.ghost { background:transparent; color:var(--muted); border:1.5px solid var(--border); font-size:12.5px; }
+.prod-fn { font-size:11.5px; color:var(--hint); text-align:center; margin-top:4px; line-height:1.6; }
+.src { font-size:10.5px; color:var(--hint); text-align:center; margin:0 0 1.5rem; line-height:1.7; }
+.footer { text-align:center; padding:2rem 0 1rem; font-size:11.5px; color:var(--hint); }
+.footer a { color:var(--gold); text-decoration:none; }
+
+.modal-bg { display:none; position:fixed; inset:0; background:rgba(0,0,0,.55); z-index:999; align-items:center; justify-content:center; padding:1rem; }
+.modal-bg.open { display:flex; }
+.modal-box { background:var(--white); border-radius:var(--r-xl); padding:1.5rem; max-width:460px; width:100%; box-shadow:0 24px 72px rgba(0,0,0,.3); }
+.modal-h { font-size:15px; font-weight:600; color:var(--text); margin-bottom:4px; }
+.modal-sub { font-size:12px; color:var(--muted); margin-bottom:1rem; line-height:1.5; }
+.modal-preview { width:100%; aspect-ratio:1; border-radius:12px; overflow:hidden; border:1px solid var(--border); margin-bottom:1rem; background:var(--navy); }
+#snap-canvas { width:100%; height:100%; display:block; }
+.modal-actions { display:flex; gap:8px; }
+.modal-dl { flex:1; padding:11px; background:var(--navy); color:var(--white); border:none; border-radius:var(--r); font-size:13.5px; font-weight:600; cursor:pointer; font-family:'DM Sans',sans-serif; display:flex; align-items:center; justify-content:center; gap:5px; }
+.modal-close { padding:11px 15px; background:var(--warm); color:var(--mid); border:1px solid var(--border); border-radius:var(--r); font-size:13px; font-weight:500; cursor:pointer; font-family:'DM Sans',sans-serif; }
+
+@keyframes glow { 0%,100%{box-shadow:var(--sh-lg);}50%{box-shadow:0 12px 40px rgba(201,168,76,.3);} }
+.result-hero.pulse { animation:glow .5s ease; }
+@media(max-width:480px){
+  .trade-grid{grid-template-columns:repeat(2,1fr);}
+  .rh-monthly{font-size:50px;}
+  h1{font-size:24px;}
+  .charts-row{grid-template-columns:1fr;}
+  .compare-cols{grid-template-columns:1fr;}
+  .share-row{flex-direction:column;align-items:flex-start;}
+  .f-row{grid-template-columns:90px 1fr 40px;}
+}
 </style>
 </head>
 <body>
+
 <div class="top-bar">
   <a href="https://payhip.com/ThePromptSanctum">The Prompt Sanctum — AI tools for trades contractors ↗</a>
 </div>
+
 <div class="page">
-  <h1>How much are missed calls costing you?</h1>
-  <p class="sub">Move the sliders. See your real number in seconds — free.</p>
-  <div class="testimonial">
-    <p class="test-text">"I thought I was missing maybe 2-3 calls a week. This showed me it was closer to 9. Set up the fix in a weekend — recovered $1,200 in the first week."</p>
-    <p class="test-attr">Marco Rivera · Rivera HVAC · Riverside, CA</p>
+
+  <div class="eyebrow">Free Calculator</div>
+  <h1>How much are missed calls<br>costing <em>your</em> business?</h1>
+  <p class="hero-sub">Tune every number to match your company. Results update live as you move the sliders.</p>
+
+  <div class="testi">
+    <p class="testi-text">"I thought I was missing maybe 2–3 calls a week. This showed me it was closer to 9. Set up the fix over a weekend — recovered $1,200 in the first week."</p>
+    <p class="testi-attr">Marco Rivera · Rivera HVAC · Riverside, CA</p>
   </div>
-  <div class="field-group">
-    <label>Your trade</label>
+
+  <!-- CARD 1 -->
+  <div class="card">
+    <div class="card-label"><span class="step-dot">1</span> Your Business</div>
+    <div style="margin-bottom:1.1rem;">
+      <label class="f-label" for="biz-name">Business name <span style="font-weight:400;color:var(--hint)">(personalizes your share card)</span></label>
+      <input type="text" class="text-input" id="biz-name" placeholder="e.g. Rivera HVAC" maxlength="40" oninput="calc()">
+    </div>
+    <label class="f-label">Your trade</label>
     <div class="trade-grid">
-      <button class="sel-btn selected" id="trade-HVAC" onclick="selectTrade('HVAC',350)"><span class="btn-title">HVAC</span><span class="btn-sub">$350 avg missed lead</span></button>
-      <button class="sel-btn" id="trade-Plumbing" onclick="selectTrade('Plumbing',275)"><span class="btn-title">Plumbing</span><span class="btn-sub">$275 avg missed lead</span></button>
-      <button class="sel-btn" id="trade-Electrical" onclick="selectTrade('Electrical',225)"><span class="btn-title">Electrical</span><span class="btn-sub">$225 avg missed lead</span></button>
-      <button class="sel-btn" id="trade-Roofing" onclick="selectTrade('Roofing',800)"><span class="btn-title">Roofing</span><span class="btn-sub">$800 avg missed lead</span></button>
-      <button class="sel-btn" id="trade-Cleaning" onclick="selectTrade('Cleaning',120)"><span class="btn-title">Cleaning</span><span class="btn-sub">$120 avg missed lead</span></button>
-      <button class="sel-btn" id="trade-Other" onclick="selectTrade('Other',300)"><span class="btn-title">Other</span><span class="btn-sub">$300 avg missed lead</span></button>
+      <button class="t-btn on" id="tr-HVAC" onclick="setTrade('HVAC',350)"><span class="t-name">HVAC</span><span class="t-val">$350 avg job</span></button>
+      <button class="t-btn" id="tr-Plumbing" onclick="setTrade('Plumbing',275)"><span class="t-name">Plumbing</span><span class="t-val">$275 avg job</span></button>
+      <button class="t-btn" id="tr-Electrical" onclick="setTrade('Electrical',225)"><span class="t-name">Electrical</span><span class="t-val">$225 avg job</span></button>
+      <button class="t-btn" id="tr-Roofing" onclick="setTrade('Roofing',800)"><span class="t-name">Roofing</span><span class="t-val">$800 avg job</span></button>
+      <button class="t-btn" id="tr-Cleaning" onclick="setTrade('Cleaning',120)"><span class="t-name">Cleaning</span><span class="t-val">$120 avg job</span></button>
+      <button class="t-btn" id="tr-Other" onclick="setTrade('Other',300)"><span class="t-name">Other</span><span class="t-val">$300 avg job</span></button>
     </div>
   </div>
-  <div class="field-group">
-    <label>How many legitimate calls do you get per week?</label>
-    <p class="field-hint">Real customers only — do not count spam, robocalls, or vendor calls</p>
-    <div class="slider-wrap">
-      <input type="range" min="5" max="100" step="1" value="20" id="calls-slider" oninput="updateCalc()">
-      <span class="slider-val" id="calls-val">20/week</span>
+
+  <!-- CARD 2 -->
+  <div class="card">
+    <div class="card-label"><span class="step-dot">2</span> Your Call Volume</div>
+    <div class="sl-wrap">
+      <div class="sl-top">
+        <label class="sl-label" for="sl">Legitimate calls per week</label>
+        <div class="sl-badge" id="sl-val">20</div>
+      </div>
+      <p class="f-hint" style="margin-bottom:9px;">Real customers only — subtract obvious spam &amp; vendor calls</p>
+      <input type="range" id="sl" min="1" max="80" value="20" oninput="calc()">
+      <div class="sl-ticks"><span>1</span><span>20</span><span>40</span><span>60</span><span>80</span></div>
     </div>
-    <span class="warn-note">Tip: check your recent call log and subtract obvious spam numbers. Most contractors overestimate their real lead volume by 30-40%.</span>
+    <div class="warn">💡 Most contractors overestimate real lead volume by 30–40%. Check your recent call log and subtract obvious spam before setting this number.</div>
+    <div style="margin-top:1.2rem;">
+      <label class="f-label" style="margin-bottom:8px;">Who answers when you're on a job?</label>
+      <div class="staff-grid">
+        <button class="s-btn on" id="st-solo" onclick="setStaff('solo',0.62)">
+          <span class="s-name">Just me</span>
+          <span class="s-sub">~62% go unanswered on job sites — Contractor Magazine 2024</span>
+        </button>
+        <button class="s-btn" id="st-office" onclick="setStaff('office',0.27)">
+          <span class="s-name">I have office help</span>
+          <span class="s-sub">~27% still go unanswered — Invoca 2025</span>
+        </button>
+      </div>
+    </div>
   </div>
-  <div class="field-group">
-    <label>When you're on a job, who answers your calls?</label>
-    <div class="staff-grid">
-      <button class="sel-btn selected" id="staff-solo" onclick="selectStaff('solo',0.62)">
-        <span class="btn-title">Just me</span>
-        <span class="btn-sub">~62% go unanswered on job sites — Contractor Magazine 2024</span>
+
+  <!-- CARD 3 -->
+  <div class="card">
+    <div class="card-label"><span class="step-dot">3</span> Tune Your Numbers</div>
+    <div class="tune-row">
+      <div class="tune-cell">
+        <label for="jv">Your avg job value ($)</label>
+        <input type="number" class="num-input" id="jv" value="350" min="50" max="10000" step="25" oninput="calc()">
+        <p class="t-hint">Pre-filled from trade — edit to match reality</p>
+      </div>
+      <div class="tune-cell">
+        <label for="cr">Lead close rate (%)</label>
+        <input type="number" class="num-input" id="cr" value="20" min="5" max="90" step="5" oninput="calc()">
+        <p class="t-hint">Industry avg 20% — raise if you close more</p>
+      </div>
+    </div>
+    <div class="tune-row" style="margin-top:10px;">
+      <div class="tune-cell">
+        <label for="wy">Active weeks / year</label>
+        <input type="number" class="num-input" id="wy" value="48" min="20" max="52" step="1" oninput="calc()">
+        <p class="t-hint">Account for slow seasons &amp; holidays</p>
+      </div>
+      <div class="tune-cell">
+        <label for="vmr">% of missed calls leaving VM</label>
+        <input type="number" class="num-input" id="vmr" value="15" min="5" max="70" step="5" oninput="calc()">
+        <p class="t-hint">~15% avg. Most callers just call the next guy.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FUNNEL -->
+  <div class="funnel-card">
+    <div class="chart-title">Where your calls go every week</div>
+    <div class="funnel-bars" id="funnel"></div>
+  </div>
+
+  <!-- DONUT + BAR -->
+  <div class="charts-row">
+    <div class="chart-card">
+      <div class="chart-title">Call breakdown</div>
+      <div class="donut-wrap">
+        <svg id="donut-svg" width="108" height="108" viewBox="0 0 108 108">
+          <circle cx="54" cy="54" r="40" fill="none" stroke="#e4ddd0" stroke-width="15"/>
+          <circle id="d-answered" cx="54" cy="54" r="40" fill="none" stroke="#22c55e" stroke-width="15" stroke-dasharray="0 251" stroke-linecap="butt"/>
+          <circle id="d-missed" cx="54" cy="54" r="40" fill="none" stroke="#f59e0b" stroke-width="15" stroke-dasharray="0 251" stroke-linecap="butt"/>
+          <circle id="d-leads" cx="54" cy="54" r="40" fill="none" stroke="#ef4444" stroke-width="15" stroke-dasharray="0 251" stroke-linecap="butt"/>
+        </svg>
+        <div class="donut-center">
+          <div class="donut-pct" id="d-pct">0%</div>
+          <div class="donut-sub">lost to<br>competitor</div>
+        </div>
+      </div>
+      <div class="donut-legend">
+        <div class="leg-row"><span class="leg-dot" style="background:#22c55e"></span><span id="lg-ans">0 answered</span></div>
+        <div class="leg-row"><span class="leg-dot" style="background:#f59e0b"></span><span id="lg-miss">0 missed (no lead)</span></div>
+        <div class="leg-row"><span class="leg-dot" style="background:#ef4444"></span><span id="lg-lead">0 leads lost</span></div>
+      </div>
+    </div>
+
+    <div class="chart-card">
+      <div class="chart-title">Monthly revenue: current vs. fixed</div>
+      <div class="bar-compare">
+        <div class="bc-row">
+          <div class="bc-lbl"><span>Currently keeping</span><span id="bc-keep-val">$0/mo</span></div>
+          <div class="bc-track"><div class="bc-fill gain" id="bc-keep" style="width:0%"></div></div>
+        </div>
+        <div class="bc-row" style="margin-top:4px;">
+          <div class="bc-lbl"><span style="color:var(--red)">Leaking out</span><span id="bc-lose-val" style="color:var(--red)">$0/mo</span></div>
+          <div class="bc-track"><div class="bc-fill lost" id="bc-lose" style="width:0%"></div></div>
+        </div>
+        <div class="bc-row" style="margin-top:8px;">
+          <div class="bc-lbl"><span style="color:var(--green)">If you fix this</span><span id="bc-fix-val" style="color:var(--green)">$0/mo</span></div>
+          <div class="bc-track"><div class="bc-fill gain" id="bc-fix" style="width:0%"></div></div>
+        </div>
+        <p id="bc-note" style="font-size:11px;color:var(--hint);margin-top:8px;line-height:1.5;"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESULT HERO -->
+  <div class="result-hero" id="rh">
+    <p class="rh-eye" id="rh-eye">Revenue walking out the door every month</p>
+    <p class="rh-monthly" id="rh-monthly">$0</p>
+    <p class="rh-annual" id="rh-annual"><strong>$0</strong> per year</p>
+    <div class="rh-5yr">
+      <div class="rh-5yr-lbl">5-year cost if nothing changes</div>
+      <div class="rh-5yr-val" id="rh-5yr">$0</div>
+      <div class="rh-5yr-note">At current trajectory</div>
+    </div>
+  </div>
+
+  <!-- SCENARIO COMPARE -->
+  <div class="compare-card">
+    <div class="chart-title" style="margin-bottom:1rem;">What changes when you fix it</div>
+    <div class="compare-cols">
+      <div class="cc now">
+        <div class="cc-lbl r">Right now</div>
+        <div class="cc-num r" id="cc-now">$0<span style="font-size:14px;font-family:'DM Sans',sans-serif">/mo</span></div>
+        <div class="cc-sub" id="cc-now-sub">Revenue leaking monthly from missed calls</div>
+      </div>
+      <div class="cc fixed">
+        <div class="cc-lbl g">After the fix</div>
+        <div class="cc-num g" id="cc-fix">$0<span style="font-size:14px;font-family:'DM Sans',sans-serif">/mo</span></div>
+        <div class="cc-sub" id="cc-fix-sub">Estimated recovery with automated follow-up</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXPLAIN -->
+  <div class="explain"><p id="explain"></p></div>
+
+  <!-- SHARE -->
+  <div class="share-card">
+    <div class="share-row">
+      <div class="share-text">
+        <h3>📸 Share your results</h3>
+        <p>Download a 1:1 image for Facebook or Instagram. Show your network what missed calls really cost.</p>
+      </div>
+      <button class="share-btn" onclick="openSnap()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Create image
       </button>
-      <button class="sel-btn" id="staff-office" onclick="selectStaff('office',0.27)">
-        <span class="btn-title">I have office help</span>
-        <span class="btn-sub">~27% still go unanswered — Invoca 2025</span>
-      </button>
     </div>
   </div>
-  <hr>
-  <div class="gap-row">
-    <div class="gap-card">
-      <p class="gap-label">Voicemails you see</p>
-      <p class="gap-value" id="voicemail-calls">1/week</p>
-      <p class="gap-note">Most callers never leave one</p>
-    </div>
-    <div class="gap-card">
-      <p class="gap-label">Leads actually lost</p>
-      <p class="gap-value red" id="real-calls">4/week</p>
-      <p class="gap-note">Already called your competitor</p>
-    </div>
-  </div>
-  <div class="explain-box">
-    <p class="explain-text" id="explain-text"></p>
-  </div>
-  <div class="main-card">
-    <p class="main-label">Revenue walking out the door every month</p>
-    <p class="main-monthly" id="monthly-loss">$0</p>
-    <p class="main-annual" id="annual-loss">$0 per year</p>
-  </div>
-  <p class="source-line">Contractor Magazine 2024 · Invoca 2025 · Data from 1,200+ contractors · 411 Locals 2024 study of 85 businesses</p>
-  <div class="email-section">
-    <p class="email-title">See the exact message Rivera HVAC sends to every missed caller — free</p>
-    <p class="email-sub">One email. The template that recovered $1,200 in Week 1. No spam ever.</p>
+
+  <p class="src">Sources: Contractor Magazine 2024 · Invoca 2025 · 411 Locals study of 85 businesses · 1,200+ contractor survey</p>
+
+  <!-- EMAIL -->
+  <div class="email-card">
+    <p class="email-h">Get the exact text Rivera HVAC sends to every missed caller — free</p>
+    <p class="email-sub">The template that recovered $1,200 in Week 1. One email, no spam ever.</p>
     <div class="email-row">
-      <input type="email" id="email-input" placeholder="your@email.com">
-      <button onclick="submitEmail()">Send it</button>
+      <input type="email" id="em" placeholder="your@email.com">
+      <button onclick="sendEmail()">Send it</button>
     </div>
-    <p class="email-confirm" id="email-confirm">On its way — check your inbox.</p>
+    <p class="email-ok" id="em-ok">✓ On its way — check your inbox.</p>
   </div>
 
-  <!-- ===== UPDATED CTA SECTION ===== -->
-  <div class="fix-section">
-    <p class="fix-label" id="fix-label">Fix the leak — choose your path</p>
+  <!-- PRODUCTS -->
+  <p class="prod-label" id="prod-label">Fix the leak — choose your path</p>
 
-    <div class="fix-card">
-      <div class="fix-card-header">
-        <span class="fix-tier">IndOp 1-A</span>
-        <span class="fix-price">$47 <span class="fix-price-note">one-time</span></span>
-      </div>
-      <p class="fix-title">DIY Build Guide</p>
-      <p class="fix-desc">Complete 31-step automation guide in plain English. Build it yourself — screen-level descriptions at every step, warning boxes at every failure point. All 5 message templates included. Zero subscriptions to us, ever.</p>
-      <a class="fix-btn" href="https://payhip.com/b/QzScA" target="_blank">Get the DIY guide — $47 &#8599;</a>
-      <a class="fix-btn fix-btn-ghost" href="/message-kit">Try the free message preview first</a>
+  <div class="prod-card">
+    <div class="prod-top">
+      <span class="prod-tier">IndOp 1-A</span>
+      <span class="prod-price">$47 <span class="prod-price-note">one-time</span></span>
     </div>
-
-    <div class="fix-card fix-card-featured">
-      <span class="fix-card-badge">Most complete</span>
-      <div class="fix-card-header">
-        <span class="fix-tier">IndOp 1-B</span>
-        <span class="fix-price">$97 <span class="fix-price-note">one-time</span></span>
-      </div>
-      <p class="fix-title">Complete Build Package + Claude AI Build Coach</p>
-      <p class="fix-desc">Everything in the $47 guide plus Claude AI walks beside you through every step — paste one file into Claude.ai (free), Claude learns your business in 5 questions and guides the full build from Step 1 to go-live. Includes your personalized business report.</p>
-      <ul class="fix-list">
-        <li>31-step build guide — 5 phases, 12 milestones</li>
-        <li>Claude AI Build Coach — guided build, adapted to your trade and skill level</li>
-        <li>5 personalized messages + personalized business ROI report</li>
-        <li>Nomorobo spam filter setup included</li>
-        <li>Claude.ai free account is sufficient — no paid subscription needed</li>
-      </ul>
-      <a class="fix-btn fix-btn-gold" href="https://payhip.com/b/6zeiv" target="_blank">Get the complete package — $97 &#8599;</a>
-    </div>
-
-    <p class="fix-footnote">Running costs: ~$20–22/month to Twilio, Make.com &amp; Anthropic. No monthly fee to us. Ever. You own the system.</p>
+    <p class="prod-title">DIY Build Guide</p>
+    <p class="prod-desc">Complete 31-step automation guide in plain English. Build it yourself — screen-level descriptions at every step, warning boxes at every failure point. All 5 message templates included. Zero subscriptions to us, ever.</p>
+    <a class="prod-btn navy" href="https://payhip.com/b/QzScA" target="_blank">Get the DIY guide — $47 ↗</a>
+    <a class="prod-btn ghost" href="/message-kit">Try the free message preview first</a>
   </div>
-  <!-- ===== END UPDATED CTA SECTION ===== -->
+
+  <div class="prod-card feat">
+    <span class="prod-badge">Most complete</span>
+    <div class="prod-top">
+      <span class="prod-tier">IndOp 1-B</span>
+      <span class="prod-price">$97 <span class="prod-price-note">one-time</span></span>
+    </div>
+    <p class="prod-title">Complete Build Package + Claude AI Build Coach</p>
+    <p class="prod-desc">Everything in the $47 guide plus Claude AI walks beside you through every step — paste one file into Claude.ai (free), Claude learns your business in 5 questions and guides the full build from Step 1 to go-live.</p>
+    <ul class="prod-list">
+      <li>31-step build guide — 5 phases, 12 milestones</li>
+      <li>Claude AI Build Coach — guided build, adapted to your trade &amp; skill level</li>
+      <li>5 personalized messages + personalized business ROI report</li>
+      <li>Nomorobo spam filter setup included</li>
+      <li>Claude.ai free account is sufficient — no paid subscription needed</li>
+    </ul>
+    <a class="prod-btn gold" href="https://payhip.com/b/6zeiv" target="_blank">Get the complete package — $97 ↗</a>
+  </div>
+
+  <p class="prod-fn">Running costs: ~$20–22/month to Twilio, Make.com &amp; Anthropic. No monthly fee to us. Ever. You own the system.</p>
 
   <div class="footer">
-    <p>&#169; 2026 The Prompt Sanctum&#8482; &middot; <a href="https://payhip.com/ThePromptSanctum">payhip.com/ThePromptSanctum</a></p>
-    <p style="margin-top:4px;">IndOp&#8482; Series — AI tools built for independent operators</p>
+    <p>© 2026 The Prompt Sanctum™ · <a href="https://payhip.com/ThePromptSanctum">payhip.com/ThePromptSanctum</a></p>
+    <p style="margin-top:3px;">IndOp™ Series — AI tools built for independent operators</p>
+  </div>
+
+</div>
+
+<!-- MODAL -->
+<div class="modal-bg" id="modal" onclick="closeSnap(event)">
+  <div class="modal-box">
+    <p class="modal-h">Your shareable results image</p>
+    <p class="modal-sub">Download and post to Facebook or Instagram. Tag us and show your network!</p>
+    <div class="modal-preview"><canvas id="snap-canvas" width="600" height="600"></canvas></div>
+    <div class="modal-actions">
+      <button class="modal-dl" onclick="dlSnap()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download image
+      </button>
+      <button class="modal-close" onclick="closeSnap()">Close</button>
+    </div>
   </div>
 </div>
+
 <script>
-let tradeSelected = 'HVAC', leadValue = 350, missRate = 0.62;
-function selectTrade(trade, val) {
-  tradeSelected = trade; leadValue = val;
-  document.querySelectorAll('[id^="trade-"]').forEach(b => b.classList.remove('selected'));
-  document.getElementById('trade-' + trade).classList.add('selected');
-  updateCalc();
+let trade = 'HVAC', jv = 350, mr = 0.62, S = {};
+
+function setTrade(t, v) {
+  trade = t; jv = v;
+  document.querySelectorAll('[id^="tr-"]').forEach(b => b.classList.remove('on'));
+  document.getElementById('tr-' + t).classList.add('on');
+  document.getElementById('jv').value = v;
+  calc();
 }
-function selectStaff(mode, rate) {
-  missRate = rate;
-  document.getElementById('staff-solo').classList.toggle('selected', mode === 'solo');
-  document.getElementById('staff-office').classList.toggle('selected', mode === 'office');
-  updateCalc();
+function setStaff(m, r) {
+  mr = r;
+  document.getElementById('st-solo').classList.toggle('on', m === 'solo');
+  document.getElementById('st-office').classList.toggle('on', m === 'office');
+  calc();
 }
-function updateCalc() {
-  const w = parseInt(document.getElementById('calls-slider').value);
-  document.getElementById('calls-val').textContent = w + '/week';
-  const missed = Math.round(w * missRate);
+function slPct(el) {
+  const p = ((el.value - el.min) / (el.max - el.min)) * 100;
+  el.style.setProperty('--p', p + '%');
+}
+
+// DONUT — circumference of r=40 circle = ~251
+function setDonut(aPct, mPct, lPct) {
+  const C = 2 * Math.PI * 40;
+  const a = (aPct/100)*C, m = (mPct/100)*C, l = (lPct/100)*C;
+  const dA = document.getElementById('d-answered');
+  const dM = document.getElementById('d-missed');
+  const dL = document.getElementById('d-leads');
+  dA.setAttribute('stroke-dasharray', a + ' ' + (C-a));
+  dA.setAttribute('stroke-dashoffset', '0');
+  dM.setAttribute('stroke-dasharray', m + ' ' + (C-m));
+  dM.setAttribute('stroke-dashoffset', -a);
+  dL.setAttribute('stroke-dasharray', l + ' ' + (C-l));
+  dL.setAttribute('stroke-dashoffset', -(a+m));
+}
+
+function drawFunnel(w, ans, missNoLead, leads) {
+  const rows = [
+    { label:'Total calls', val:w, pct:100, cls:'c-total' },
+    { label:'Answered', val:ans, pct:Math.round((ans/w)*100), cls:'c-answered' },
+    { label:'Missed (no lead)', val:missNoLead, pct:Math.round((missNoLead/w)*100), cls:'c-missed' },
+    { label:'Lost leads', val:leads, pct:Math.round((leads/w)*100), cls:'c-leads' },
+  ];
+  document.getElementById('funnel').innerHTML = rows.map(r => {
+    const w2 = Math.max(6, r.pct);
+    const lbl = r.val > 0 ? r.val + ' calls' : '';
+    return `<div class="f-row">
+      <div class="f-row-label">${r.label}</div>
+      <div class="f-bar-track">
+        <div class="f-bar-fill ${r.cls}" style="width:${w2}%"><span>${lbl}</span></div>
+      </div>
+      <div class="f-row-count">${r.val}</div>
+    </div>`;
+  }).join('');
+}
+
+function calc() {
+  const slEl = document.getElementById('sl');
+  slPct(slEl);
+  const w = parseInt(slEl.value);
+  document.getElementById('sl-val').textContent = w;
+
+  const jobVal = parseFloat(document.getElementById('jv').value) || jv;
+  const closeR = (parseFloat(document.getElementById('cr').value) || 20) / 100;
+  const weeksY = parseInt(document.getElementById('wy').value) || 48;
+  const vmRt = (parseFloat(document.getElementById('vmr').value) || 15) / 100;
+
+  const missed = Math.round(w * mr);
+  const answered = w - missed;
   const leads = Math.round(missed * 0.35);
-  const vm = Math.max(1, Math.round(leads * 0.15));
-  const monthly = Math.round(leads * 4.33 * leadValue * 0.20);
-  const annual = monthly * 12;
-  document.getElementById('voicemail-calls').textContent = vm + '/week';
-  document.getElementById('real-calls').textContent = leads + '/week';
-  document.getElementById('monthly-loss').textContent = '$' + monthly.toLocaleString();
-  document.getElementById('annual-loss').textContent = '$' + annual.toLocaleString() + ' per year';
-  document.getElementById('explain-text').textContent = 'Of your ' + w + ' weekly calls, roughly ' + missed + ' go unanswered while you\'re working (' + Math.round(missRate*100) + '% miss rate). About ' + leads + ' of those are genuine new customer leads. Most never leave a voicemail — they call the next ' + tradeSelected.toLowerCase() + ' contractor immediately. Based on a $' + leadValue + ' average missed lead value for ' + tradeSelected + ' (Contractor Magazine 2024).';
-  document.getElementById('fix-label').textContent = 'Fix the $' + monthly.toLocaleString() + '/month leak — choose your path';
+  const missNoLead = missed - leads;
+  const vm = Math.max(1, Math.round(leads * vmRt));
+  const wkMo = weeksY / 12;
+
+  const monthly = Math.round(leads * wkMo * jobVal * closeR);
+  const annual = Math.round(leads * weeksY * jobVal * closeR);
+  const fiveYr = Math.round(annual * 5 * 1.03);
+  const fixMo = Math.round(monthly * 0.65);
+  const keptMo = Math.round(answered * 0.35 * wkMo * jobVal * closeR);
+
+  S = { w, answered, missed, leads, missNoLead, vm, monthly, annual, fiveYr, fixMo, jobVal, closeR: Math.round(closeR*100), weeksY, trade, biz: document.getElementById('biz-name').value.trim() };
+
+  // FUNNEL
+  drawFunnel(w, answered, missNoLead, leads);
+
+  // DONUT
+  const aPct = Math.round((answered/w)*100);
+  const mPct = Math.round((missNoLead/w)*100);
+  const lPct = Math.round((leads/w)*100);
+  setDonut(aPct, mPct, lPct);
+  document.getElementById('d-pct').textContent = lPct + '%';
+  document.getElementById('lg-ans').textContent = answered + ' answered';
+  document.getElementById('lg-miss').textContent = missNoLead + ' missed (no lead)';
+  document.getElementById('lg-lead').textContent = leads + ' leads lost';
+
+  // BAR CHART
+  const mx = Math.max(keptMo, monthly, fixMo) || 1;
+  document.getElementById('bc-keep').style.width = Math.round((keptMo/mx)*100) + '%';
+  document.getElementById('bc-lose').style.width = Math.round((monthly/mx)*100) + '%';
+  document.getElementById('bc-fix').style.width = Math.round((fixMo/mx)*100) + '%';
+  document.getElementById('bc-keep-val').textContent = '$' + keptMo.toLocaleString() + '/mo';
+  document.getElementById('bc-lose-val').textContent = '$' + monthly.toLocaleString() + '/mo';
+  document.getElementById('bc-fix-val').textContent = '+$' + fixMo.toLocaleString() + '/mo';
+  document.getElementById('bc-note').textContent = 'Recovery estimate assumes ~65% capture rate with automated follow-up. Actual results vary.';
+
+  // HERO
+  const biz = document.getElementById('biz-name').value.trim();
+  document.getElementById('rh-eye').textContent = biz ? biz + ' — revenue leaking monthly' : 'Revenue walking out the door every month';
+  document.getElementById('rh-monthly').textContent = '$' + monthly.toLocaleString();
+  document.getElementById('rh-annual').innerHTML = '<strong>$' + annual.toLocaleString() + '</strong> per year';
+  document.getElementById('rh-5yr').textContent = '$' + fiveYr.toLocaleString();
+  const rh = document.getElementById('rh');
+  rh.classList.remove('pulse'); void rh.offsetWidth; rh.classList.add('pulse');
+
+  // COMPARE
+  document.getElementById('cc-now').innerHTML = '$' + monthly.toLocaleString() + '<span style="font-size:14px;font-family:\'DM Sans\',sans-serif">/mo</span>';
+  document.getElementById('cc-fix').innerHTML = '+$' + fixMo.toLocaleString() + '<span style="font-size:14px;font-family:\'DM Sans\',sans-serif">/mo</span>';
+  document.getElementById('cc-now-sub').textContent = leads + ' leads/wk × $' + jobVal.toLocaleString() + ' avg × ' + Math.round(closeR*100) + '% close rate';
+  document.getElementById('cc-fix-sub').textContent = 'With automated text follow-up — based on 65% capture rate from similar contractors';
+
+  // EXPLAIN
+  document.getElementById('explain').textContent =
+    'Of your ' + w + ' weekly calls, ' + missed + ' go unanswered (' + Math.round(mr*100) + '% miss rate). ' +
+    'About ' + leads + ' of those are genuine new leads — but only ' + vm + '/week leave a voicemail. ' +
+    'The rest call your competitor immediately. At $' + jobVal.toLocaleString() + '/job and ' + Math.round(closeR*100) + '% close rate, each lost lead costs $' + Math.round(jobVal*closeR).toLocaleString() + '.';
+
+  document.getElementById('prod-label').textContent = 'Fix the $' + monthly.toLocaleString() + '/month leak — choose your path';
 }
-function submitEmail() {
-  const email = document.getElementById('email-input').value.trim();
-  if (!email || !email.includes('@')) return;
+
+function sendEmail() {
+  const em = document.getElementById('em').value.trim();
+  if (!em || !em.includes('@')) return;
   fetch('https://formspree.io/f/mqewegqy', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email, source: 'Revenue Leak Calculator', trade: tradeSelected })
-  }).catch(() => {});
-  document.getElementById('email-confirm').style.display = 'block';
-  document.getElementById('email-input').disabled = true;
+    method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({ email:em, source:'Revenue Leak Calculator', trade })
+  }).catch(()=>{});
+  document.getElementById('em-ok').style.display = 'block';
+  document.getElementById('em').disabled = true;
 }
-updateCalc();
+
+// SNAPSHOT
+function rr(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.lineTo(x+w-r,y);c.quadraticCurveTo(x+w,y,x+w,y+r);c.lineTo(x+w,y+h-r);c.quadraticCurveTo(x+w,y+h,x+w-r,y+h);c.lineTo(x+r,y+h);c.quadraticCurveTo(x,y+h,x,y+h-r);c.lineTo(x,y+r);c.quadraticCurveTo(x,y,x+r,y);c.closePath();}
+
+function openSnap() { drawSnap(); document.getElementById('modal').classList.add('open'); }
+function closeSnap(e) { if (!e || e.target === document.getElementById('modal')) document.getElementById('modal').classList.remove('open'); }
+
+function drawSnap() {
+  const cv = document.getElementById('snap-canvas');
+  const c = cv.getContext('2d');
+  cv.width = 600; cv.height = 600;
+  const W=600, H=600, P=44;
+
+  // BG + glow
+  c.fillStyle='#0C1A2E'; c.fillRect(0,0,W,H);
+  const g=c.createRadialGradient(W*.72,70,0,W*.72,70,360);
+  g.addColorStop(0,'rgba(201,168,76,.2)'); g.addColorStop(1,'rgba(201,168,76,0)');
+  c.fillStyle=g; c.fillRect(0,0,W,H);
+  c.fillStyle='#C9A84C'; c.fillRect(0,0,W,4); c.fillRect(0,H-4,W,4);
+
+  // Brand + biz
+  c.fillStyle='#C9A84C'; c.font='700 11px sans-serif'; c.fillText('THE PROMPT SANCTUM',P,36);
+  const bizName = S.biz||'Your Business';
+  c.fillStyle='rgba(255,255,255,.65)'; c.font='500 17px sans-serif'; c.fillText(bizName+' · '+S.trade,P,66);
+
+  // Divider
+  c.strokeStyle='rgba(255,255,255,.1)'; c.lineWidth=1; c.beginPath(); c.moveTo(P,82); c.lineTo(W-P,82); c.stroke();
+
+  // Label + main number
+  c.fillStyle='rgba(255,255,255,.4)'; c.font='600 11px sans-serif'; c.fillText('MONTHLY REVENUE WALKING OUT THE DOOR',P,106);
+  c.fillStyle='#fff'; c.font='400 76px Georgia,serif'; c.fillText('$'+S.monthly.toLocaleString(),P,200);
+  c.fillStyle='rgba(255,255,255,.5)'; c.font='500 14px sans-serif';
+  c.fillText('$'+S.annual.toLocaleString()+'/yr  ·  $'+S.fiveYr.toLocaleString()+' over 5 years',P,230);
+
+  // Divider
+  c.strokeStyle='rgba(255,255,255,.08)'; c.beginPath(); c.moveTo(P,248); c.lineTo(W-P,248); c.stroke();
+
+  // FUNNEL BARS
+  const bars=[
+    {lbl:'Total calls',val:S.w,max:S.w,color:'#3b82f6'},
+    {lbl:'Answered',val:S.answered,max:S.w,color:'#22c55e'},
+    {lbl:'Missed (no lead)',val:S.missNoLead,max:S.w,color:'#f59e0b'},
+    {lbl:'Lost leads',val:S.leads,max:S.w,color:'#ef4444'},
+  ];
+  const bY=262, bH=22, bGap=33, trkW=W-P-155;
+  bars.forEach((b,i)=>{
+    const y=bY+i*bGap;
+    c.fillStyle='rgba(255,255,255,.5)'; c.font='500 11px sans-serif'; c.fillText(b.lbl,P,y+15);
+    c.fillStyle='rgba(255,255,255,.08)'; rr(c,155,y,trkW,bH,4); c.fill();
+    const fw=Math.max(8,Math.round((b.val/b.max)*trkW));
+    const bg=c.createLinearGradient(155,0,155+fw,0);
+    bg.addColorStop(0,b.color+'bb'); bg.addColorStop(1,b.color);
+    c.fillStyle=bg; rr(c,155,y,fw,bH,4); c.fill();
+    c.fillStyle='#fff'; c.font='600 11px sans-serif'; c.fillText(b.val,W-P,y+15);
+  });
+
+  // Divider
+  c.strokeStyle='rgba(201,168,76,.28)'; c.lineWidth=1; c.beginPath(); c.moveTo(P,400); c.lineTo(W-P,400); c.stroke();
+
+  // STAT BOXES
+  const stats=[
+    ['$'+S.monthly.toLocaleString()+'/mo','Monthly leak'],
+    [S.leads+'/wk','Leads lost'],
+    ['$'+S.jobVal.toLocaleString(),'Avg job value'],
+    [S.closeR+'%','Close rate'],
+  ];
+  const sw=(W-P*2)/4;
+  stats.forEach((st,i)=>{
+    const x=P+i*sw;
+    c.fillStyle='rgba(255,255,255,.07)'; rr(c,x,412,sw-6,64,8); c.fill();
+    c.strokeStyle='rgba(255,255,255,.1)'; rr(c,x,412,sw-6,64,8); c.stroke();
+    c.fillStyle='#fff'; c.font='600 15px sans-serif'; c.fillText(st[0],x+10,440);
+    c.fillStyle='rgba(255,255,255,.42)'; c.font='400 10px sans-serif'; c.fillText(st[1],x+10,458);
+  });
+
+  // Divider
+  c.strokeStyle='rgba(255,255,255,.08)'; c.beginPath(); c.moveTo(P,492); c.lineTo(W-P,492); c.stroke();
+
+  // CTA
+  c.fillStyle='rgba(255,255,255,.35)'; c.font='400 11px sans-serif'; c.fillText('See your number free:',P,518);
+  c.fillStyle='#C9A84C'; c.font='600 12px sans-serif'; c.fillText('thepromptsanctum.netlify.app',P+148,518);
+
+  // Fix teaser
+  c.fillStyle='rgba(255,255,255,.35)'; c.font='400 11px sans-serif';
+  c.fillText('Automated fix available at thepromptsanctum.netlify.app — recover up to $'+S.fixMo.toLocaleString()+'/mo',P,542);
+
+  // Bottom gold bar already drawn
+}
+
+function dlSnap() {
+  const cv = document.getElementById('snap-canvas');
+  const a = document.createElement('a');
+  const n = (S.biz||'results').replace(/\s+/g,'-').toLowerCase();
+  a.download = 'revenue-leak-' + n + '.png';
+  a.href = cv.toDataURL('image/png');
+  a.click();
+}
+
+calc();
 </script>
 </body>
 </html>
