@@ -152,12 +152,42 @@ input[type=range]::-moz-range-thumb { width:20px; height:20px; border-radius:50%
 .explain p { font-size:12.5px; color:var(--blue); line-height:1.65; margin:0; }
 
 .share-card { background:var(--white); border:1px solid var(--border); border-radius:var(--r-lg); padding:1.375rem 1.5rem; margin-bottom:.875rem; box-shadow:var(--sh-sm); }
-.share-row { display:flex; align-items:center; justify-content:space-between; gap:12px; }
-.share-text h3 { font-size:14px; font-weight:600; color:var(--text); margin-bottom:3px; }
-.share-text p { font-size:12px; color:var(--muted); line-height:1.5; }
-.share-btn { flex-shrink:0; display:flex; align-items:center; gap:6px; padding:10px 16px; background:var(--gold); color:var(--navy); border:none; border-radius:var(--r); cursor:pointer; font-size:13px; font-weight:700; font-family:'DM Sans',sans-serif; white-space:nowrap; box-shadow:var(--sh-sm); transition:background .15s; }
-.share-btn:hover { background:var(--gold-lite); }
-.share-btn svg { width:15px; height:15px; }
+.share-header { margin-bottom:1rem; }
+.share-h { font-size:14px; font-weight:600; color:var(--text); margin-bottom:3px; }
+.share-sub { font-size:12px; color:var(--muted); line-height:1.5; }
+
+/* CARD STYLE PICKER */
+.card-style-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:9px; margin-bottom:12px; }
+.card-style-btn { border:1.5px solid var(--border); border-radius:var(--r); background:var(--cream); cursor:pointer; padding:0; overflow:hidden; text-align:left; transition:all .15s; }
+.card-style-btn:hover { border-color:var(--border-2); box-shadow:var(--sh-sm); }
+.card-style-btn.active { border-color:var(--navy); box-shadow:0 0 0 2px rgba(12,26,46,.12); }
+.csb-preview { height:80px; display:flex; align-items:center; justify-content:center; flex-direction:column; position:relative; overflow:hidden; }
+/* Shock style preview */
+.csb-shock { background:#fff; border-bottom:1px solid var(--border); }
+.csb-big { font-size:22px; font-weight:700; color:#b91c1c; font-family:Georgia,serif; line-height:1; }
+.csb-small { font-size:9px; font-weight:600; color:#78716c; text-transform:uppercase; letter-spacing:.06em; margin-top:2px; }
+/* Split style preview */
+.csb-split { background:#fff; border-bottom:1px solid var(--border); flex-direction:row; gap:0; }
+.csb-left-half { flex:1; background:#fef2f2; display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; gap:2px; }
+.csb-right-half { flex:1; background:#f0fdf4; display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; gap:2px; }
+.csb-tag-r { font-size:7px; font-weight:700; color:#b91c1c; text-transform:uppercase; letter-spacing:.06em; }
+.csb-tag-g { font-size:7px; font-weight:700; color:#166534; text-transform:uppercase; letter-spacing:.06em; }
+.csb-num-r { font-size:16px; font-weight:700; color:#b91c1c; font-family:Georgia,serif; line-height:1; }
+.csb-num-g { font-size:16px; font-weight:700; color:#16a34a; font-family:Georgia,serif; line-height:1; }
+/* Dashboard style preview */
+.csb-dash { background:#0C1A2E; border-bottom:1px solid #1e3054; padding:10px; }
+.csb-dash-inner { width:100%; }
+.csb-dash-label { font-size:7px; font-weight:600; color:rgba(201,168,76,.8); text-transform:uppercase; letter-spacing:.06em; margin-bottom:6px; }
+.csb-dash-bars { display:flex; flex-direction:column; gap:4px; }
+.csb-bar { height:6px; border-radius:2px; }
+/* Button labels */
+.csb-label { font-size:12px; font-weight:600; color:var(--text); padding:6px 10px 2px; }
+.csb-desc { font-size:10.5px; color:var(--muted); padding:0 10px 8px; line-height:1.4; }
+.card-style-btn.active .csb-label { color:var(--navy); }
+
+.share-btn-full { width:100%; display:flex; align-items:center; justify-content:center; gap:7px; padding:11px; background:var(--gold); color:var(--navy); border:none; border-radius:var(--r); cursor:pointer; font-size:13.5px; font-weight:700; font-family:'DM Sans',sans-serif; transition:background .15s; box-shadow:var(--sh-sm); }
+.share-btn-full:hover { background:var(--gold-lite); }
+.share-btn-full svg { flex-shrink:0; }
 
 .email-card { background:var(--green-bg); border:1px solid var(--green-border); border-radius:var(--r-lg); padding:1.375rem 1.5rem; margin-bottom:.875rem; }
 .email-h { font-size:14px; font-weight:600; color:var(--green); margin-bottom:3px; }
@@ -195,11 +225,18 @@ input[type=range]::-moz-range-thumb { width:20px; height:20px; border-radius:50%
 
 .modal-bg { display:none; position:fixed; inset:0; background:rgba(0,0,0,.55); z-index:999; align-items:center; justify-content:center; padding:1rem; }
 .modal-bg.open { display:flex; }
-.modal-box { background:var(--white); border-radius:var(--r-xl); padding:1.5rem; max-width:460px; width:100%; box-shadow:0 24px 72px rgba(0,0,0,.3); }
-.modal-h { font-size:15px; font-weight:600; color:var(--text); margin-bottom:4px; }
-.modal-sub { font-size:12px; color:var(--muted); margin-bottom:1rem; line-height:1.5; }
-.modal-preview { width:100%; aspect-ratio:1; border-radius:12px; overflow:hidden; border:1px solid var(--border); margin-bottom:1rem; background:var(--navy); }
+.modal-box { background:var(--white); border-radius:var(--r-xl); padding:1.5rem; max-width:460px; width:100%; box-shadow:0 24px 72px rgba(0,0,0,.3); max-height:90vh; overflow-y:auto; }
+.modal-top { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:1rem; }
+.modal-h { font-size:15px; font-weight:600; color:var(--text); margin-bottom:3px; }
+.modal-sub { font-size:12px; color:var(--muted); line-height:1.5; }
+.modal-x { background:none; border:none; cursor:pointer; font-size:16px; color:var(--hint); padding:0 0 0 8px; line-height:1; }
+.modal-x:hover { color:var(--text); }
+.modal-style-tabs { display:flex; gap:5px; margin-bottom:12px; background:var(--warm); border-radius:var(--r); padding:4px; }
+.mst-tab { flex:1; padding:7px 6px; border:none; background:transparent; border-radius:7px; font-size:12px; font-weight:600; color:var(--muted); cursor:pointer; font-family:'DM Sans',sans-serif; transition:all .15s; }
+.mst-tab.active { background:var(--white); color:var(--navy); box-shadow:var(--sh-sm); }
+.modal-preview { width:100%; aspect-ratio:1; border-radius:12px; overflow:hidden; border:1px solid var(--border); margin-bottom:8px; background:var(--navy); }
 #snap-canvas { width:100%; height:100%; display:block; }
+.modal-tip { font-size:11.5px; color:var(--muted); background:var(--blue-bg); border:1px solid var(--blue-border); border-radius:var(--r); padding:7px 12px; margin-bottom:12px; line-height:1.5; }
 .modal-actions { display:flex; gap:8px; }
 .modal-dl { flex:1; padding:11px; background:var(--navy); color:var(--white); border:none; border-radius:var(--r); font-size:13.5px; font-weight:600; cursor:pointer; font-family:'DM Sans',sans-serif; display:flex; align-items:center; justify-content:center; gap:5px; }
 .modal-close { padding:11px 15px; background:var(--warm); color:var(--mid); border:1px solid var(--border); border-radius:var(--r); font-size:13px; font-weight:500; cursor:pointer; font-family:'DM Sans',sans-serif; }
@@ -392,16 +429,55 @@ input[type=range]::-moz-range-thumb { width:20px; height:20px; border-radius:50%
 
   <!-- SHARE -->
   <div class="share-card">
-    <div class="share-row">
-      <div class="share-text">
-        <h3>📸 Share your results</h3>
-        <p>Download a 1:1 image for Facebook or Instagram. Show your network what missed calls really cost.</p>
+    <div class="share-header">
+      <div>
+        <h3 class="share-h">📸 Create a shareable post image</h3>
+        <p class="share-sub">Pick a style, download, post to Facebook or Instagram. Each format is designed to stop the scroll.</p>
       </div>
-      <button class="share-btn" onclick="openSnap()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        Create image
+    </div>
+    <div class="card-style-grid">
+      <button class="card-style-btn active" id="style-shock" onclick="setStyle('shock',this)">
+        <div class="csb-preview csb-shock">
+          <div class="csb-big">$1,120</div>
+          <div class="csb-small">leaking monthly</div>
+        </div>
+        <div class="csb-label">The Shock</div>
+        <div class="csb-desc">Bold number · Clean · High share rate</div>
+      </button>
+      <button class="card-style-btn" id="style-split" onclick="setStyle('split',this)">
+        <div class="csb-preview csb-split">
+          <div class="csb-left-half">
+            <div class="csb-tag-r">LOSING</div>
+            <div class="csb-num-r">$1,120</div>
+          </div>
+          <div class="csb-right-half">
+            <div class="csb-tag-g">RECOVERABLE</div>
+            <div class="csb-num-g">$728</div>
+          </div>
+        </div>
+        <div class="csb-label">Problem / Fix</div>
+        <div class="csb-desc">Split contrast · Scroll-stopper · FB groups</div>
+      </button>
+      <button class="card-style-btn" id="style-dash" onclick="setStyle('dash',this)">
+        <div class="csb-preview csb-dash">
+          <div class="csb-dash-inner">
+            <div class="csb-dash-label">CALL BREAKDOWN</div>
+            <div class="csb-dash-bars">
+              <div class="csb-bar" style="width:100%;background:#3b82f6"></div>
+              <div class="csb-bar" style="width:40%;background:#22c55e"></div>
+              <div class="csb-bar" style="width:40%;background:#f59e0b"></div>
+              <div class="csb-bar" style="width:20%;background:#ef4444"></div>
+            </div>
+          </div>
+        </div>
+        <div class="csb-label">The Dashboard</div>
+        <div class="csb-desc">Data-rich · Funnel chart · LinkedIn</div>
       </button>
     </div>
+    <button class="share-btn-full" onclick="openSnap()">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Preview &amp; download this style
+    </button>
   </div>
 
   <p class="src">Sources: Contractor Magazine 2024 · Invoca 2025 · 411 Locals study of 85 businesses · 1,200+ contractor survey</p>
@@ -461,13 +537,24 @@ input[type=range]::-moz-range-thumb { width:20px; height:20px; border-radius:50%
 <!-- MODAL -->
 <div class="modal-bg" id="modal" onclick="closeSnap(event)">
   <div class="modal-box">
-    <p class="modal-h">Your shareable results image</p>
-    <p class="modal-sub">Download and post to Facebook or Instagram. Tag us and show your network!</p>
+    <div class="modal-top">
+      <div>
+        <p class="modal-h">Your shareable post image</p>
+        <p class="modal-sub">Download and post to Facebook or Instagram. Tag us!</p>
+      </div>
+      <button class="modal-x" onclick="closeSnap()">✕</button>
+    </div>
+    <div class="modal-style-tabs">
+      <button class="mst-tab active" id="mtab-shock" onclick="switchModalStyle('shock',this)">The Shock</button>
+      <button class="mst-tab" id="mtab-split" onclick="switchModalStyle('split',this)">Problem/Fix</button>
+      <button class="mst-tab" id="mtab-dash" onclick="switchModalStyle('dash',this)">Dashboard</button>
+    </div>
     <div class="modal-preview"><canvas id="snap-canvas" width="600" height="600"></canvas></div>
+    <div class="modal-tip" id="modal-tip">Best for: Facebook groups, Instagram — stops the scroll with a single big number.</div>
     <div class="modal-actions">
       <button class="modal-dl" onclick="dlSnap()">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        Download image
+        Download this image
       </button>
       <button class="modal-close" onclick="closeSnap()">Close</button>
     </div>
@@ -614,99 +701,352 @@ function sendEmail() {
   document.getElementById('em').disabled = true;
 }
 
-// SNAPSHOT
+// SNAPSHOT STATE
+let snapStyle = 'shock';
+
+function setStyle(style, btn) {
+  snapStyle = style;
+  document.querySelectorAll('.card-style-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+function switchModalStyle(style, btn) {
+  snapStyle = style;
+  document.querySelectorAll('.mst-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const tips = {
+    shock: 'Best for: Facebook groups, Instagram feed — stops the scroll with a single big number.',
+    split: 'Best for: Facebook groups, contractor communities — the contrast format drives comments and shares.',
+    dash: 'Best for: LinkedIn, professional audiences — data-rich format signals credibility.'
+  };
+  document.getElementById('modal-tip').textContent = tips[style];
+  drawSnap();
+}
+
 function rr(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.lineTo(x+w-r,y);c.quadraticCurveTo(x+w,y,x+w,y+r);c.lineTo(x+w,y+h-r);c.quadraticCurveTo(x+w,y+h,x+w-r,y+h);c.lineTo(x+r,y+h);c.quadraticCurveTo(x,y+h,x,y+h-r);c.lineTo(x,y+r);c.quadraticCurveTo(x,y,x+r,y);c.closePath();}
 
-function openSnap() { drawSnap(); document.getElementById('modal').classList.add('open'); }
-function closeSnap(e) { if (!e || e.target === document.getElementById('modal')) document.getElementById('modal').classList.remove('open'); }
+function openSnap() {
+  drawSnap();
+  // sync tabs with page selection
+  document.querySelectorAll('.mst-tab').forEach(b => b.classList.remove('active'));
+  const tabEl = document.getElementById('mtab-' + snapStyle);
+  if (tabEl) tabEl.classList.add('active');
+  document.getElementById('modal').classList.add('open');
+}
+function closeSnap(e) {
+  if (!e || e.target === document.getElementById('modal')) document.getElementById('modal').classList.remove('open');
+}
 
 function drawSnap() {
+  if (snapStyle === 'shock') drawShock();
+  else if (snapStyle === 'split') drawSplit();
+  else drawDash();
+}
+
+// ═══════════════════════════════════════════
+// CARD A: THE SHOCK — clean white, big red number
+// Best for FB groups, Instagram
+// ═══════════════════════════════════════════
+function drawShock() {
   const cv = document.getElementById('snap-canvas');
   const c = cv.getContext('2d');
-  cv.width = 600; cv.height = 600;
-  const W=600, H=600, P=44;
+  cv.width = 1080; cv.height = 1080;
+  const W=1080, H=1080;
+
+  // White background
+  c.fillStyle = '#ffffff';
+  c.fillRect(0,0,W,H);
+
+  // Subtle warm texture via gradient
+  const bg = c.createLinearGradient(0,0,0,H);
+  bg.addColorStop(0,'#faf8f4'); bg.addColorStop(1,'#f3f0ea');
+  c.fillStyle = bg; c.fillRect(0,0,W,H);
+
+  // Navy top strip
+  c.fillStyle = '#0C1A2E'; c.fillRect(0,0,W,12);
+  // Gold accent line
+  c.fillStyle = '#C9A84C'; c.fillRect(0,12,W,5);
+  // Navy bottom strip
+  c.fillStyle = '#0C1A2E'; c.fillRect(0,H-12,W,12);
+  c.fillStyle = '#C9A84C'; c.fillRect(0,H-17,W,5);
+
+  // Brand top
+  c.fillStyle = '#C9A84C'; c.font = 'bold 26px sans-serif';
+  c.textAlign = 'center';
+  c.fillText('THE PROMPT SANCTUM', W/2, 64);
+
+  // Eyebrow
+  c.fillStyle = '#78716c'; c.font = '500 28px sans-serif';
+  c.fillText((S.biz || 'Your Business') + ' · ' + S.trade, W/2, 118);
+
+  // Divider rule
+  c.strokeStyle = '#e4ddd0'; c.lineWidth = 2;
+  c.beginPath(); c.moveTo(80,148); c.lineTo(W-80,148); c.stroke();
+
+  // Main question
+  c.fillStyle = '#1c1917'; c.font = '600 44px sans-serif';
+  c.fillText('How much are missed calls costing you?', W/2, 230);
+
+  // Giant dollar amount
+  c.fillStyle = '#b91c1c'; c.font = 'bold 220px Georgia,serif';
+  c.fillText('$' + S.monthly.toLocaleString(), W/2, 530);
+
+  // Per month label
+  c.fillStyle = '#44403c'; c.font = '500 42px sans-serif';
+  c.fillText('every single month', W/2, 600);
+
+  // Rule
+  c.strokeStyle = '#e4ddd0'; c.lineWidth = 1.5;
+  c.beginPath(); c.moveTo(80,650); c.lineTo(W-80,650); c.stroke();
+
+  // Three stat boxes
+  const stats = [
+    { val: S.leads + ' leads', sub: 'lost per week' },
+    { val: '$' + S.annual.toLocaleString(), sub: 'per year' },
+    { val: '$' + S.fiveYr.toLocaleString(), sub: '5-year cost' },
+  ];
+  const bw = 300, bh = 120, bpad = 40;
+  const totalW = stats.length * bw + (stats.length - 1) * bpad;
+  const startX = (W - totalW) / 2;
+  stats.forEach((st, i) => {
+    const x = startX + i * (bw + bpad);
+    // Box
+    c.fillStyle = '#fff';
+    rr(c, x, 680, bw, bh, 14); c.fill();
+    c.strokeStyle = '#e4ddd0'; c.lineWidth = 1.5;
+    rr(c, x, 680, bw, bh, 14); c.stroke();
+    // Value
+    c.fillStyle = '#0C1A2E'; c.font = 'bold 34px sans-serif';
+    c.textAlign = 'center';
+    c.fillText(st.val, x + bw/2, 730);
+    // Sub
+    c.fillStyle = '#78716c'; c.font = '400 22px sans-serif';
+    c.fillText(st.sub, x + bw/2, 762);
+  });
+
+  // CTA strip
+  c.fillStyle = '#0C1A2E';
+  rr(c, 80, 840, W-160, 100, 16); c.fill();
+  c.fillStyle = '#C9A84C'; c.font = 'bold 28px sans-serif';
+  c.textAlign = 'center';
+  c.fillText('Calculate your own number free:', W/2, 884);
+  c.fillStyle = '#ffffff'; c.font = '600 26px sans-serif';
+  c.fillText('thepromptsanctum.netlify.app', W/2, 920);
+
+  // Bottom line
+  c.fillStyle = '#a8a29e'; c.font = '400 20px sans-serif';
+  c.fillText('Missed Call Revenue Leak Calculator  ·  Free tool for trades contractors', W/2, 1020);
+
+  c.textAlign = 'left';
+}
+
+// ═══════════════════════════════════════════
+// CARD B: PROBLEM / FIX — split contrast panel
+// Best for FB groups — the scroll-stopper format
+// ═══════════════════════════════════════════
+function drawSplit() {
+  const cv = document.getElementById('snap-canvas');
+  const c = cv.getContext('2d');
+  cv.width = 1080; cv.height = 1080;
+  const W=1080, H=1080;
+
+  // Left panel — red/problem
+  c.fillStyle = '#1a0404';
+  c.fillRect(0, 0, W/2, H);
+  const leftGrad = c.createLinearGradient(0, 0, W/2, H);
+  leftGrad.addColorStop(0, '#2d0a0a');
+  leftGrad.addColorStop(1, '#1a0404');
+  c.fillStyle = leftGrad; c.fillRect(0, 0, W/2, H);
+
+  // Right panel — green/fix
+  const rightGrad = c.createLinearGradient(W/2, 0, W, H);
+  rightGrad.addColorStop(0, '#071a0d');
+  rightGrad.addColorStop(1, '#0d2418');
+  c.fillStyle = rightGrad; c.fillRect(W/2, 0, W/2, H);
+
+  // Center divider
+  c.fillStyle = '#ffffff';
+  c.fillRect(W/2 - 2, 0, 4, H);
+
+  // Brand bar at top
+  c.fillStyle = '#0C1A2E'; c.fillRect(0,0,W,60);
+  c.fillStyle = '#C9A84C'; c.fillRect(0,60,W,4);
+  c.fillStyle = '#C9A84C'; c.font = 'bold 22px sans-serif'; c.textAlign = 'center';
+  c.fillText('THE PROMPT SANCTUM  ·  Missed Call Revenue Calculator', W/2, 40);
+
+  // Business + trade
+  c.fillStyle = 'rgba(255,255,255,.55)'; c.font = '500 28px sans-serif';
+  c.fillText((S.biz || 'Your Business') + '  ·  ' + S.trade, W/2, 120);
+
+  // LEFT PANEL CONTENT
+  c.textAlign = 'center';
+  // "CURRENTLY" label
+  c.fillStyle = 'rgba(255,100,100,.7)'; c.font = 'bold 20px sans-serif';
+  c.letterSpacing = '0.12em';
+  c.fillText('C U R R E N T L Y   L O S I N G', W/4, 200);
+
+  // Big red loss number
+  c.fillStyle = '#ff4444'; c.font = 'bold 148px Georgia,serif';
+  c.fillText('$' + S.monthly.toLocaleString(), W/4, 390);
+
+  c.fillStyle = 'rgba(255,255,255,.65)'; c.font = '500 30px sans-serif';
+  c.fillText('per month', W/4, 440);
+
+  // Divider
+  c.strokeStyle = 'rgba(255,100,100,.25)'; c.lineWidth = 1;
+  c.beginPath(); c.moveTo(60, 475); c.lineTo(W/2-30, 475); c.stroke();
+
+  c.fillStyle = 'rgba(255,255,255,.45)'; c.font = '400 24px sans-serif';
+  c.fillText('$' + S.annual.toLocaleString() + ' per year', W/4, 520);
+  c.fillText('$' + S.fiveYr.toLocaleString() + ' over 5 years', W/4, 558);
+  c.fillText(S.leads + ' leads lost per week', W/4, 596);
+
+  // Pain label bottom
+  c.fillStyle = 'rgba(255,100,100,.55)'; c.font = 'bold 22px sans-serif';
+  c.fillText('YOUR COMPETITION IS GETTING', W/4, 680);
+  c.fillText('THESE CALLS RIGHT NOW', W/4, 712);
+
+  // RIGHT PANEL CONTENT
+  // "RECOVERABLE" label
+  c.fillStyle = 'rgba(100,255,150,.7)'; c.font = 'bold 20px sans-serif';
+  c.fillText('R E C O V E R A B L E', W/2 + W/4, 200);
+
+  // Big green recovery number
+  c.fillStyle = '#4ade80'; c.font = 'bold 148px Georgia,serif';
+  c.fillText('+$' + S.fixMo.toLocaleString(), W/2 + W/4, 390);
+
+  c.fillStyle = 'rgba(255,255,255,.65)'; c.font = '500 30px sans-serif';
+  c.fillText('per month', W/2 + W/4, 440);
+
+  c.strokeStyle = 'rgba(100,255,150,.25)'; c.lineWidth = 1;
+  c.beginPath(); c.moveTo(W/2+30, 475); c.lineTo(W-60, 475); c.stroke();
+
+  c.fillStyle = 'rgba(255,255,255,.45)'; c.font = '400 24px sans-serif';
+  c.fillText('With automated follow-up', W/2 + W/4, 520);
+  c.fillText('~65% capture rate', W/2 + W/4, 558);
+  c.fillText('$' + Math.round(S.jobVal * (S.closeR/100)).toLocaleString() + ' saved per lead', W/2 + W/4, 596);
+
+  c.fillStyle = 'rgba(100,255,150,.55)'; c.font = 'bold 22px sans-serif';
+  c.fillText('AUTOMATED TEXT REPLIES', W/2 + W/4, 680);
+  c.fillText('TO EVERY MISSED CALLER', W/2 + W/4, 712);
+
+  // BOTTOM CTA
+  c.fillStyle = '#C9A84C';
+  rr(c, 60, 770, W-120, 110, 18); c.fill();
+  c.fillStyle = '#0C1A2E'; c.font = 'bold 30px sans-serif';
+  c.fillText('What would YOU do with an extra $' + S.fixMo.toLocaleString() + '/month?', W/2, 818);
+  c.font = '600 24px sans-serif';
+  c.fillText('Calculate your own leak free → thepromptsanctum.netlify.app', W/2, 856);
+
+  // Bottom brand
+  c.fillStyle = 'rgba(255,255,255,.3)'; c.font = '400 19px sans-serif';
+  c.fillText('Free calculator for HVAC, plumbing, electrical, roofing & cleaning contractors', W/2, 940);
+
+  // Question prompt
+  c.fillStyle = 'rgba(255,255,255,.5)'; c.font = 'bold 26px sans-serif';
+  c.fillText('TAG A CONTRACTOR WHO NEEDS TO SEE THIS 👇', W/2, 1010);
+
+  c.textAlign = 'left';
+}
+
+// ═══════════════════════════════════════════
+// CARD C: THE DASHBOARD — data-rich, navy, funnel bars
+// Best for LinkedIn / professional audiences
+// ═══════════════════════════════════════════
+function drawDash() {
+  const cv = document.getElementById('snap-canvas');
+  const c = cv.getContext('2d');
+  cv.width = 1080; cv.height = 1080;
+  const W=1080, H=1080, P=72;
+  c.textAlign = 'left';
 
   // BG + glow
   c.fillStyle='#0C1A2E'; c.fillRect(0,0,W,H);
-  const g=c.createRadialGradient(W*.72,70,0,W*.72,70,360);
-  g.addColorStop(0,'rgba(201,168,76,.2)'); g.addColorStop(1,'rgba(201,168,76,0)');
+  const g=c.createRadialGradient(W*.72,100,0,W*.72,100,600);
+  g.addColorStop(0,'rgba(201,168,76,.18)'); g.addColorStop(1,'rgba(201,168,76,0)');
   c.fillStyle=g; c.fillRect(0,0,W,H);
-  c.fillStyle='#C9A84C'; c.fillRect(0,0,W,4); c.fillRect(0,H-4,W,4);
 
-  // Brand + biz
-  c.fillStyle='#C9A84C'; c.font='700 11px sans-serif'; c.fillText('THE PROMPT SANCTUM',P,36);
+  // Top + bottom gold bars
+  c.fillStyle='#C9A84C'; c.fillRect(0,0,W,8); c.fillRect(0,H-8,W,8);
+
+  // Brand
+  c.fillStyle='#C9A84C'; c.font='bold 22px sans-serif'; c.fillText('THE PROMPT SANCTUM',P,54);
   const bizName = S.biz||'Your Business';
-  c.fillStyle='rgba(255,255,255,.65)'; c.font='500 17px sans-serif'; c.fillText(bizName+' · '+S.trade,P,66);
+  c.fillStyle='rgba(255,255,255,.6)'; c.font='500 30px sans-serif'; c.fillText(bizName+' · '+S.trade,P,106);
 
   // Divider
-  c.strokeStyle='rgba(255,255,255,.1)'; c.lineWidth=1; c.beginPath(); c.moveTo(P,82); c.lineTo(W-P,82); c.stroke();
+  c.strokeStyle='rgba(255,255,255,.1)'; c.lineWidth=1.5; c.beginPath(); c.moveTo(P,130); c.lineTo(W-P,130); c.stroke();
 
-  // Label + main number
-  c.fillStyle='rgba(255,255,255,.4)'; c.font='600 11px sans-serif'; c.fillText('MONTHLY REVENUE WALKING OUT THE DOOR',P,106);
-  c.fillStyle='#fff'; c.font='400 76px Georgia,serif'; c.fillText('$'+S.monthly.toLocaleString(),P,200);
-  c.fillStyle='rgba(255,255,255,.5)'; c.font='500 14px sans-serif';
-  c.fillText('$'+S.annual.toLocaleString()+'/yr  ·  $'+S.fiveYr.toLocaleString()+' over 5 years',P,230);
+  // Section header
+  c.fillStyle='rgba(255,255,255,.38)'; c.font='600 20px sans-serif'; c.fillText('MONTHLY REVENUE WALKING OUT THE DOOR',P,172);
+
+  // Big number
+  c.fillStyle='#fff'; c.font='400 140px Georgia,serif'; c.fillText('$'+S.monthly.toLocaleString(),P,340);
+
+  // Annual + 5yr
+  c.fillStyle='rgba(255,255,255,.55)'; c.font='500 26px sans-serif';
+  c.fillText('$'+S.annual.toLocaleString()+' per year   ·   $'+S.fiveYr.toLocaleString()+' over 5 years',P,392);
 
   // Divider
-  c.strokeStyle='rgba(255,255,255,.08)'; c.beginPath(); c.moveTo(P,248); c.lineTo(W-P,248); c.stroke();
+  c.strokeStyle='rgba(255,255,255,.08)'; c.beginPath(); c.moveTo(P,424); c.lineTo(W-P,424); c.stroke();
 
   // FUNNEL BARS
+  c.fillStyle='rgba(255,255,255,.5)'; c.font='600 20px sans-serif'; c.fillText('WHERE YOUR CALLS GO EVERY WEEK',P,468);
+
   const bars=[
-    {lbl:'Total calls',val:S.w,max:S.w,color:'#3b82f6'},
-    {lbl:'Answered',val:S.answered,max:S.w,color:'#22c55e'},
-    {lbl:'Missed (no lead)',val:S.missNoLead,max:S.w,color:'#f59e0b'},
-    {lbl:'Lost leads',val:S.leads,max:S.w,color:'#ef4444'},
+    {lbl:'Total calls ('+S.w+')',val:S.w,max:S.w,color:'#3b82f6'},
+    {lbl:'Answered ('+S.answered+')',val:S.answered,max:S.w,color:'#22c55e'},
+    {lbl:'Missed — no lead ('+(S.missNoLead)+')',val:S.missNoLead,max:S.w,color:'#f59e0b'},
+    {lbl:'Lost leads ('+S.leads+')',val:S.leads,max:S.w,color:'#ef4444'},
   ];
-  const bY=262, bH=22, bGap=33, trkW=W-P-155;
+  const bY=492, bH=38, bGap=56, lblW=340, trkX=P+lblW+16, trkW=W-P-lblW-P-16;
   bars.forEach((b,i)=>{
     const y=bY+i*bGap;
-    c.fillStyle='rgba(255,255,255,.5)'; c.font='500 11px sans-serif'; c.fillText(b.lbl,P,y+15);
-    c.fillStyle='rgba(255,255,255,.08)'; rr(c,155,y,trkW,bH,4); c.fill();
-    const fw=Math.max(8,Math.round((b.val/b.max)*trkW));
-    const bg=c.createLinearGradient(155,0,155+fw,0);
-    bg.addColorStop(0,b.color+'bb'); bg.addColorStop(1,b.color);
-    c.fillStyle=bg; rr(c,155,y,fw,bH,4); c.fill();
-    c.fillStyle='#fff'; c.font='600 11px sans-serif'; c.fillText(b.val,W-P,y+15);
+    c.fillStyle='rgba(255,255,255,.5)'; c.font='500 20px sans-serif'; c.fillText(b.lbl,P,y+25);
+    c.fillStyle='rgba(255,255,255,.07)'; rr(c,trkX,y,trkW,bH,6); c.fill();
+    const fw=Math.max(12,Math.round((b.val/b.max)*trkW));
+    const bg=c.createLinearGradient(trkX,0,trkX+fw,0);
+    bg.addColorStop(0,b.color+'aa'); bg.addColorStop(1,b.color);
+    c.fillStyle=bg; rr(c,trkX,y,fw,bH,6); c.fill();
   });
 
-  // Divider
-  c.strokeStyle='rgba(201,168,76,.28)'; c.lineWidth=1; c.beginPath(); c.moveTo(P,400); c.lineTo(W-P,400); c.stroke();
+  // Gold divider
+  c.strokeStyle='rgba(201,168,76,.3)'; c.lineWidth=1.5; c.beginPath(); c.moveTo(P,730); c.lineTo(W-P,730); c.stroke();
 
   // STAT BOXES
   const stats=[
-    ['$'+S.monthly.toLocaleString()+'/mo','Monthly leak'],
-    [S.leads+'/wk','Leads lost'],
+    ['$'+S.monthly.toLocaleString()+'/mo','Leaking monthly'],
+    [S.leads+'/wk','Lost leads'],
     ['$'+S.jobVal.toLocaleString(),'Avg job value'],
     [S.closeR+'%','Close rate'],
+    ['+$'+S.fixMo.toLocaleString()+'/mo','Recoverable'],
   ];
-  const sw=(W-P*2)/4;
+  const sw=(W-P*2-32)/5;
   stats.forEach((st,i)=>{
-    const x=P+i*sw;
-    c.fillStyle='rgba(255,255,255,.07)'; rr(c,x,412,sw-6,64,8); c.fill();
-    c.strokeStyle='rgba(255,255,255,.1)'; rr(c,x,412,sw-6,64,8); c.stroke();
-    c.fillStyle='#fff'; c.font='600 15px sans-serif'; c.fillText(st[0],x+10,440);
-    c.fillStyle='rgba(255,255,255,.42)'; c.font='400 10px sans-serif'; c.fillText(st[1],x+10,458);
+    const x=P+i*(sw+8);
+    const isRec = i===4;
+    c.fillStyle = isRec ? 'rgba(34,197,94,.12)' : 'rgba(255,255,255,.07)';
+    rr(c,x,748,sw,100,10); c.fill();
+    c.strokeStyle = isRec ? 'rgba(34,197,94,.3)' : 'rgba(255,255,255,.1)';
+    rr(c,x,748,sw,100,10); c.stroke();
+    c.fillStyle = isRec ? '#4ade80' : '#fff';
+    c.font='600 24px sans-serif'; c.fillText(st[0],x+14,798);
+    c.fillStyle='rgba(255,255,255,.42)'; c.font='400 17px sans-serif'; c.fillText(st[1],x+14,828);
   });
 
-  // Divider
-  c.strokeStyle='rgba(255,255,255,.08)'; c.beginPath(); c.moveTo(P,492); c.lineTo(W-P,492); c.stroke();
-
   // CTA
-  c.fillStyle='rgba(255,255,255,.35)'; c.font='400 11px sans-serif'; c.fillText('See your number free:',P,518);
-  c.fillStyle='#C9A84C'; c.font='600 12px sans-serif'; c.fillText('thepromptsanctum.netlify.app',P+148,518);
-
-  // Fix teaser
-  c.fillStyle='rgba(255,255,255,.35)'; c.font='400 11px sans-serif';
-  c.fillText('Automated fix available at thepromptsanctum.netlify.app — recover up to $'+S.fixMo.toLocaleString()+'/mo',P,542);
-
-  // Bottom gold bar already drawn
+  c.strokeStyle='rgba(255,255,255,.08)'; c.beginPath(); c.moveTo(P,868); c.lineTo(W-P,868); c.stroke();
+  c.fillStyle='rgba(255,255,255,.35)'; c.font='400 20px sans-serif'; c.fillText('Calculate your own number free:',P,906);
+  c.fillStyle='#C9A84C'; c.font='600 22px sans-serif'; c.fillText('thepromptsanctum.netlify.app',P+320,906);
+  c.fillStyle='rgba(255,255,255,.28)'; c.font='400 18px sans-serif';
+  c.fillText('Automated fix available — recover up to $'+S.fixMo.toLocaleString()+'/month with AI text follow-up',P,942);
 }
 
 function dlSnap() {
   const cv = document.getElementById('snap-canvas');
   const a = document.createElement('a');
   const n = (S.biz||'results').replace(/\s+/g,'-').toLowerCase();
-  a.download = 'revenue-leak-' + n + '.png';
+  const labels = { shock:'shock', split:'problem-fix', dash:'dashboard' };
+  a.download = 'revenue-leak-' + n + '-' + (labels[snapStyle]||'card') + '.png';
   a.href = cv.toDataURL('image/png');
   a.click();
 }
